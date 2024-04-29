@@ -13,11 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('record', function (Blueprint $table) {
+        Schema::create('contact', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->string('description');
-            //id_cliente
+            $table->string('name');
+            $table->string('role');
+            $table->string('email');
+            $table->integer('phone');
+            $table->unsignedBigInteger('customer_id');
+
+            $table->foreign('customer_id')->references('id')->on('customer');
             $table->timestamps(); // Agregamos las columnas timestamps por conveniencia
         });
     }
@@ -29,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('record');
+        Schema::dropIfExists('contact');
     }
 };

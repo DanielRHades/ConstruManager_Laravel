@@ -15,6 +15,16 @@ return new class extends Migration
     {
         //id_material
         //id_customer
+        Schema::create('customer_material', function (Blueprint $table) {
+            $table->unsignedBigInteger('customer_id');
+            $table->unsignedBigInteger('material_id');
+            $table->unsignedInteger('quantity');
+
+            $table->foreign('customer_id')->references('id')->on('customer');
+            $table->foreign('material_id')->references('id')->on('material');
+
+            $table->primary(['customer_id', 'material_id']);
+        });
     }
 
     /**
@@ -25,5 +35,6 @@ return new class extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('customer_material');
     }
 };

@@ -15,6 +15,16 @@ return new class extends Migration
     {
         //id_material
         //id_supplier
+        Schema::create('supplier_material', function (Blueprint $table) {
+            $table->unsignedBigInteger('supplier_id');
+            $table->unsignedBigInteger('material_id');
+            $table->foreign('supplier_id')->references('id')->on('supplier');
+            $table->foreign('material_id')->references('id')->on('material');
+
+            $table->primary(['supplier_id', 'material_id']);
+
+            $table->timestamps(); // Agregamos las columnas timestamps por conveniencia
+        });
     }
 
     /**
@@ -25,5 +35,6 @@ return new class extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('supplier_material');
     }
 };
