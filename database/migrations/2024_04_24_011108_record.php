@@ -13,7 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('record', function (Blueprint $table) {
+            $table->id();
+            $table->date('date');
+            $table->string('description');
+            //id_cliente
+            $table->timestamps(); // Agregamos las columnas timestamps por conveniencia
+        });
     }
 
     /**
@@ -23,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('record');
     }
 };

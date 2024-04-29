@@ -13,7 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        //
+        //id_machinery
+        //id_customer
     }
 
     /**

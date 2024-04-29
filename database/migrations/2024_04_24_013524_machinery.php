@@ -13,7 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        //
+          Schema::create('machinery', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->integer('quantity');
+            $table->integer('day_price');
+            $table->timestamps(); // Agregamos las columnas timestamps por conveniencia
+        });
     }
 
     /**
@@ -23,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('machinery');
     }
 };
