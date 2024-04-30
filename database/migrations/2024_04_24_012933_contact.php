@@ -22,7 +22,6 @@ return new class extends Migration
             $table->unsignedBigInteger('customer_id');
 
             $table->foreign('customer_id')->references('id')->on('customer');
-            $table->timestamps(); // Agregamos las columnas timestamps por conveniencia
         });
     }
 

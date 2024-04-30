@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name');
             $table->integer('quantity');
             $table->integer('unit_price');
-            $table->timestamps(); // Agregamos las columnas timestamps por conveniencia
         });
     }
 

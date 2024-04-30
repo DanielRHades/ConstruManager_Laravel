@@ -22,8 +22,6 @@ return new class extends Migration
             $table->foreign('material_id')->references('id')->on('material');
 
             $table->primary(['supplier_id', 'material_id']);
-
-            $table->timestamps(); // Agregamos las columnas timestamps por conveniencia
         });
     }
 

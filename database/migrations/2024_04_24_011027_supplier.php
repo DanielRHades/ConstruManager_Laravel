@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->integer('phone');
-            $table->timestamps(); // Agregamos las columnas timestamps por conveniencia
         });
     }
 
