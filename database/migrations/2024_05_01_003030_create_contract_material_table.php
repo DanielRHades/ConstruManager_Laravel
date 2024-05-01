@@ -13,17 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        //id_material
-        //id_customer
-        Schema::create('customer_material', function (Blueprint $table) {
-            $table->unsignedBigInteger('customer_id');
+        Schema::create('contract_material', function (Blueprint $table) {
+            $table->unsignedBigInteger('contract_id');
             $table->unsignedBigInteger('material_id');
             $table->unsignedInteger('quantity');
 
-            $table->foreign('customer_id')->references('id')->on('customer');
+            $table->foreign('contract_id')->references('id')->on('contract');
             $table->foreign('material_id')->references('id')->on('material');
 
-            $table->primary(['customer_id', 'material_id']);
+            $table->primary(['contract_id', 'material_id']);
         });
     }
 
@@ -34,7 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
-        Schema::dropIfExists('customer_material');
+        Schema::dropIfExists('contract_material');
     }
 };

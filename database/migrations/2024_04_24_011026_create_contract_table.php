@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('record', function (Blueprint $table) {
+        Schema::create('contract', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
             $table->string('description');
-            $table->unsignedBigInteger('customer_id');
-
-            $table->foreign('customer_id')->references('id')->on('customer');
+            $table->date('date');
         });
     }
 
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('record');
+        Schema::dropIfExists('contract');
     }
 };
