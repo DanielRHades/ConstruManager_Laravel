@@ -18,9 +18,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/contracts', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('contratos');
+Route::get('/suppliers', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('proveedores');
+Route::get('/materials', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('materiales');
+Route::get('/machinery', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('maquinaria');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -28,4 +41,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

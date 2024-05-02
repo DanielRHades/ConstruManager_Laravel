@@ -12,8 +12,17 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    <x-nav-link :href="route('contratos')" :active="request()->routeIs('contratos')">
+                        {{ __('Contratos') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('proveedores')" :active="request()->routeIs('proveedores')">
+                        {{ __('Proveedores') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('materiales')" :active="request()->routeIs('materiales')">
+                        {{ __('Materiales') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('maquinaria')" :active="request()->routeIs('maquinaria')">
+                        {{ __('Maquinaria') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -42,8 +51,7 @@
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
+                            <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
@@ -88,8 +96,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
+                    <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
