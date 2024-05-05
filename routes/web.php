@@ -22,16 +22,16 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/contracts', function () {
+Route::get('/dashboard/contracts', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('contratos');
-Route::get('/suppliers', function () {
+Route::get('/dashboard/suppliers', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('proveedores');
-Route::get('/materials', function () {
+Route::get('/dashboard/materials', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('materiales');
-Route::get('/machinery', function () {
+Route::get('/dashboard/machinery', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('maquinaria');
 

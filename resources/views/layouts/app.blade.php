@@ -16,13 +16,27 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
-        @include('layouts.navigation')
-        <!-- Page Content -->
-        <main>
-            {{ $slot }}
+<body class="font-sans antialiased flex flex-col h-screen">
+    @include('layouts.navigation')
+    <!-- Page Content -->
+    <div class="flex-1 relative bg-gray-100">
+        <div id="side-menu" class="absolute w-1/4 left-0 p-5 border h-full overflow-y-auto">
+            @yield('side-menu-items')
+        </div>
+        <main class="absolute w-3/4 right-0 p-5 border h-full">
+            <div class="h-1/3 overflow-y-auto w-full">
+                @yield('selected-main')
+            </div>
+            <div class="h-2/3 border overflow-y-auto w-full">
+                <div class="border-b flex">
+                    @yield('buttons-submenu')
+                </div>
+                <div class="mt-2">
+                    @yield('selected-submenu')
+                </div>
+            </div>
         </main>
+    </div>
     </div>
 </body>
 
