@@ -2,6 +2,11 @@
 @section('side-menu-items')
 <x-side-menu-item primary="Contrato 1" primary2="01/03/2024" secondary="Luis Eduardo Jaimes Hernández" route="momazos.com" />
 <x-side-menu-item primary="Contrato 1" secondary="Luis Eduardo Jaimes Hernández" route="momazos.com" />
+
+<div class="fixed bottom-12">
+    <a href="#" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</a>
+</div>
+
 @endsection
 @section('selected-main')
 <div class="relative">
@@ -15,9 +20,10 @@
 <strong class="bottom-0">Luis Eduardo Jaimes Hernández - Luis@compañia.com - 3156843255 - Persona natural</strong>
 @endsection
 @section('buttons-submenu')
-<x-button-submenu text="testBTN1" />
-<x-button-submenu text="testBTN2" />
-<x-button-submenu text="testBTN3" />
+<x-button-submenu text="Clientes" />
+<x-button-submenu text="Materiales" />
+<x-button-submenu text="Maquinarias" />
+<x-button-submenu text="Registros" />
 @endsection
 @section('selected-submenu')
 <table class="table-auto w-full">
@@ -46,4 +52,9 @@
         <th>3214567756</th>
     </tr>
 </table>
+
+<div class="fixed bottom-12 right-8">
+    <a href="#" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</a>
+</div>
+
 @endsection
