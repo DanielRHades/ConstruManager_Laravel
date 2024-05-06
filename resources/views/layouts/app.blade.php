@@ -20,7 +20,7 @@
     @include('layouts.navigation')
     <!-- Page Content -->
     <div class="flex-1 relative bg-gray-100">
-        <div id="side-menu" class="absolute w-1/4 left-0 p-5 border h-full overflow-y-auto">
+        <div id="side-menu" class="static absolute w-1/4 left-0 p-5 border h-full overflow-y-auto">
             @yield('side-menu-items')
         </div>
         <main class="absolute w-3/4 right-0 p-5 border h-full">
