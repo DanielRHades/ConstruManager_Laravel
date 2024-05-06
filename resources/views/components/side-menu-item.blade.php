@@ -12,7 +12,12 @@
             @endphp
         </p>
         <p class="text-base text-gray-400 w-fit">
-            {{$secondary}}
+            @php
+            {{
+        if (!empty($secondary)) {
+            echo $secondary;
+        }}}
+            @endphp
         </p>
     </div>
 </a>
