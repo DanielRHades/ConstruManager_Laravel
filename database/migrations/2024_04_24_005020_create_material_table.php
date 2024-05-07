@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('material', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('quantity');
-            $table->integer('unit_price');
+            $table->unsignedBigInteger('quantity');
+            $table->unsignedFloat('unit_price');
         });
     }
 

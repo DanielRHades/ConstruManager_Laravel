@@ -7,8 +7,10 @@
             <div class="mb-4">
                 <label class="block text-sm font-semibold mb-2" for="nombre">Nombre</label>
                 <select id="nombre" name="nombre" class="w-full border-gray-300 rounded-md p-2">
-                    <!-- Aquí se debe llenar con las opciones desde la base de datos -->
-                </select>
+                    @foreach($materials as $material)
+                        <option value="{{ $material->id }}">{{ $material->name }}</option>
+                    @endforeach
+                </select>       
             </div>
             <div class="flex justify-end">
                 <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2">Agregar</button>

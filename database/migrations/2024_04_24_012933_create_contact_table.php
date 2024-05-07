@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('role');
             $table->string('email');
-            $table->integer('phone');
+            $table->unsignedBigInteger('phone');
             $table->unsignedBigInteger('contract_id');
 
             $table->foreign('contract_id')->references('id')->on('contract');

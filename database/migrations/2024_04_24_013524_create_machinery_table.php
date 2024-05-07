@@ -16,8 +16,8 @@ return new class extends Migration
           Schema::create('machinery', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('quantity');
-            $table->integer('day_price');
+            $table->unsignedBigInteger('quantity');
+            $table->unsignedFloat('day_price');
         });
     }
 

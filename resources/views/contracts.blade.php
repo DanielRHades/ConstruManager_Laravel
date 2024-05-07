@@ -13,6 +13,12 @@
     </div>
 </div>
 
+<div id="form_add_customer" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        @include('components.form_add_customer')
+    </div>
+</div>
+
 <script>
     document.getElementById('openPopupButton_left').addEventListener('click', function() {
         document.getElementById('form_add_contract').classList.toggle('hidden');
@@ -32,7 +38,7 @@
 <strong class="bottom-0">Luis Eduardo Jaimes Hernández - Luis@compañia.com - 3156843255 - Persona natural</strong>
 @endsection
 @section('buttons-submenu')
-<x-button-submenu text="Clientes" />
+<x-button-submenu text="Contactos" />
 <x-button-submenu text="Materiales" />
 <x-button-submenu text="Maquinarias" />
 <x-button-submenu text="Registros" />
@@ -41,25 +47,25 @@
 <table class="table-auto w-full">
     <tr class="border-b">
         <th>Nombre</th>
-        <th>Tipo</th>
+        <th>Rol</th>
         <th>Correo</th>
         <th>Teléfono</th>
     </tr>
     <tr class="border-b">
-        <th>Empresa HL Projects</th>
-        <th>Jurídico</th>
+        <th>Pedro Sanchez</th>
+        <th>Ingeniero</th>
         <th>daniel@compañia.com</th>
         <th>3214567756</th>
     </tr>
     <tr class="border-b">
         <th>Daniel Leonardo Rodríguez Hernández</th>
-        <th>Natural</th>
+        <th>Arquitecto</th>
         <th>daniel@compañia.com</th>
         <th>3214567756</th>
     </tr>
     <tr class="border-b">
         <th>Daniel Leonardo Rodríguez Hernández</th>
-        <th>Natural</th>
+        <th>Encargado de obra</th>
         <th>daniel@compañia.com</th>
         <th>3214567756</th>
     </tr>
@@ -69,15 +75,15 @@
     <button id="openPopupButton_right" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>
 </div>
 
-<div id="form_add_customer" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+<div id="form_add_contact" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
     <div class="bg-white p-8 rounded-lg shadow-md w-96">
-        @include('components.form_add_customer')
+        @include('components.form_add_contact')
     </div>
 </div>
 
 <script>
     document.getElementById('openPopupButton_right').addEventListener('click', function() {
-        document.getElementById('form_add_customer').classList.toggle('hidden');
+        document.getElementById('form_add_contact').classList.toggle('hidden');
     });
 </script>
 

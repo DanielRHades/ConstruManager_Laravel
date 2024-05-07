@@ -24,9 +24,9 @@
     <a class="text-4xl font-bold">Vibradora de concreto</a>
 </div>
 <div class="mt-4">
-    <h1 class="text-xl font-semibold">Cantidad: 10 <span class="text-customYellow">100</span></h1>
+    <h1 class="text-xl font-semibold">Cantidad: <span class="text-customYellow">100</span></h1>
 </div>
 <div class="mt-2">
-    <strong class="text-xl font-semibold">Precio/Dia: 30000 <span class="text-customYellow">20000</span></strong>
+    <strong class="text-xl font-semibold">Precio/Dia: <span class="text-customYellow">20000</span></strong>
 </div>
 @endsection

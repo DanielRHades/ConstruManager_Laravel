@@ -21,7 +21,7 @@
             </div>
             <div class="mb-4">
                 <label class="block text-sm font-semibold mb-2" for="telefono">Teléfono</label>
-                <input type="number" id="telefono" name="telefono" class="w-full border-gray-300 rounded-md p-2">
+                <input type="tel" id="telefono" name="telefono" class="w-full border-gray-300 rounded-md p-2">
             </div>
             <div class="flex justify-end">
                 <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2">Agregar</button>

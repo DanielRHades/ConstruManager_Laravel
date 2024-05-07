@@ -2,6 +2,11 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MaterialsController;
+use App\Http\Controllers\SuppliersController;
+use App\Http\Controllers\Suppliers_MaterialsController;
+use App\Http\Controllers\MachineryController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,9 +35,19 @@ Route::get('/materials', function () {
     return view('materials');
 })->middleware(['auth', 'verified'])->name('materiales');
 
-Route::get('/machinerys', function () {
-    return view('machinerys');
+Route::get('/machinery', function () {
+    return view('machinery');
 })->middleware(['auth', 'verified'])->name('maquinarias');
+
+Route::get('/suppliers', [SuppliersController::class, 'index'])->middleware(['auth', 'verified'])->name('proveedores');
+
+Route::get('/materials', [MaterialsController::class, 'index'])->middleware(['auth', 'verified'])->name('materiales');
+
+Route::post('/materials', [MaterialsController::class, 'store'])->name('materials.store');
+
+Route::post('/machinery', [MachineryController::class, 'store'])->name('machinery.store');
+
+Route::post('/suppliers', [SuppliersController::class, 'store'])->name('suppliers.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

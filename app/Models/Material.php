@@ -10,4 +10,7 @@ class Material extends Model
     use HasFactory;
 
     protected $table = 'material';
+    protected $fillable = ['name', 'quantity', 'unit_price'];
+
+    public $timestamps = false;
 }

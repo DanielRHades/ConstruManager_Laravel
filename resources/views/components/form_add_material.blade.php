@@ -2,7 +2,7 @@
     <div class="bg-white p-8 rounded-lg shadow-md w-96">
         <h2 class="text-lg font-bold mb-4">Agregar Material</h2>
         
-        <form>
+        <form method="POST" action="{{ route('materials.store') }}">
             @csrf
             <div class="mb-4">
                 <label class="block text-sm font-semibold mb-2" for="nombre">Nombre</label>
