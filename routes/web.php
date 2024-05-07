@@ -3,7 +3,7 @@
 use App\Http\Controllers\MaterialsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MaterialsController;
+
 use App\Http\Controllers\SuppliersController;
 use App\Http\Controllers\Suppliers_MaterialsController;
 use App\Http\Controllers\MachineryController;
@@ -32,24 +32,31 @@ Route::get('/suppliers', function () {
     return view('suppliers');
 })->middleware(['auth', 'verified'])->name('proveedores');
 
-Route::get('/materials', [MaterialsController::class, 'getItems'])->middleware(['auth', 'verified'])->name('materiales');
-Route::get('/materials/{id}', [MaterialsController::class, 'getItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified']);
-Route::get('/materials/{id}/{category}', [MaterialsController::class, 'getItemRelationInfo'])->where(['id' => '[0-9]+', 'category' => '[a-z]+'])->middleware(['auth', 'verified']);
-
-
 Route::get('/machinery', function () {
     return view('machinery');
 })->middleware(['auth', 'verified'])->name('maquinarias');
 
-Route::get('/suppliers', [SuppliersController::class, 'index'])->middleware(['auth', 'verified'])->name('proveedores');
+//
 
-Route::get('/materials', [MaterialsController::class, 'index'])->middleware(['auth', 'verified'])->name('materiales');
+Route::get('/materials', [MaterialsController::class, 'getItems'])->middleware(['auth', 'verified'])->name('materiales');
+
+Route::get('/materials/{id}', [MaterialsController::class, 'getItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified']);
+
+Route::get('/materials/{id}/{category}', [MaterialsController::class, 'getItemRelationInfo'])->where(['id' => '[0-9]+', 'category' => '[a-z]+'])->middleware(['auth', 'verified']);
+
+//
+
+//Route::get('/materials', [MaterialsController::class, 'index'])->middleware(['auth', 'verified'])->name('materiales');
+
+Route::get('/suppliers', [SuppliersController::class, 'index'])->middleware(['auth', 'verified'])->name('proveedores');
 
 Route::post('/materials', [MaterialsController::class, 'store'])->name('materials.store');
 
 Route::post('/machinery', [MachineryController::class, 'store'])->name('machinery.store');
 
 Route::post('/suppliers', [SuppliersController::class, 'store'])->name('suppliers.store');
+
+//
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

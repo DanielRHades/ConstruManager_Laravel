@@ -8,11 +8,7 @@ use App\Models\Supplier;
 
 class MaterialsController extends Controller
 {
-    public function index()
-    {
-        $suppliers = Supplier::all();
-        return view('materials')->with('suppliers', $suppliers);
-    }
+
     public function store(Request $request)
     {
     
@@ -21,7 +17,6 @@ class MaterialsController extends Controller
             'cantidad' => 'required|integer|min:0', 
             'precio' => 'required|numeric|min:0', 
         ]);
-
     
         $material = new Material();
         $material->name = $validatedData['nombre']; 
@@ -32,11 +27,14 @@ class MaterialsController extends Controller
         
         return redirect()->route('materiales')->with('success', 'Material agregado exitosamente.');
     }
+
     public function getItems()
     {
+        $suppliers = Supplier::all();
         $material = Material::select('id', 'name')->get();
-        return view('materials', ['materials' => $material]);
+        return view('materials', ['materials' => $material])->with('suppliers', $suppliers);
     }
+
     public function getItemRelationInfo($itemId, $category)
     {
         $suppliers = null;
