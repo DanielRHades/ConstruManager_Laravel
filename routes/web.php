@@ -30,9 +30,9 @@ Route::get('/materials', function () {
     return view('materials');
 })->middleware(['auth', 'verified'])->name('materiales');
 
-Route::get('/machinery', function () {
+Route::get('/machinerys', function () {
     return view('machinerys');
-})->middleware(['auth', 'verified'])->name('maquinaria');
+})->middleware(['auth', 'verified'])->name('maquinarias');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

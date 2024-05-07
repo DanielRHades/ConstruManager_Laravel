@@ -21,7 +21,7 @@
                     <x-nav-link :href="route('materiales')" :active="request()->routeIs('materiales')">
                         {{ __('Materiales') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('maquinaria')" :active="request()->routeIs('maquinaria')">
+                    <x-nav-link :href="route('maquinarias')" :active="request()->routeIs('maquinarias')">
                         {{ __('Maquinarias') }}
                     </x-nav-link>
                 </div>
