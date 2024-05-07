@@ -1,11 +1,23 @@
 @extends('layouts.app')
 @section('side-menu-items')
 <x-side-menu-item primary="Contrato 1" primary2="01/03/2024" secondary="Luis Eduardo Jaimes Hernández" route="momazos.com" />
-<x-side-menu-item primary="Contrato 1" secondary="Luis Eduardo Jaimes Hernández" route="momazos.com" />
+<x-side-menu-item primary="Contrato 2" primary2="05/03/2024" secondary="Luis Eduardo Jaimes Hernández" route="momazos.com" />
 
 <div class="fixed bottom-12">
-    <a href="#" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</a>
+    <button id="openPopupButton_left" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>
 </div>
+
+<div id="form_add_contract" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        @include('components.form_add_contract')
+    </div>
+</div>
+
+<script>
+    document.getElementById('openPopupButton_left').addEventListener('click', function() {
+        document.getElementById('form_add_contract').classList.toggle('hidden');
+    });
+</script>
 
 @endsection
 @section('selected-main')
@@ -54,7 +66,19 @@
 </table>
 
 <div class="fixed bottom-12 right-8">
-    <a href="#" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</a>
+    <button id="openPopupButton_right" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>
 </div>
+
+<div id="form_add_customer" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        @include('components.form_add_customer')
+    </div>
+</div>
+
+<script>
+    document.getElementById('openPopupButton_right').addEventListener('click', function() {
+        document.getElementById('form_add_customer').classList.toggle('hidden');
+    });
+</script>
 
 @endsection

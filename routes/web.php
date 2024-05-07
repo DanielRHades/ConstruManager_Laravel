@@ -18,21 +18,20 @@ Route::get('/', function () {
     return view('auth.register');
 });
 
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/dashboard/contracts', function () {
-    return view('dashboard');
+Route::get('/contracts', function () {
+    return view('contracts');
 })->middleware(['auth', 'verified'])->name('contratos');
-Route::get('/dashboard/suppliers', function () {
-    return view('dashboard');
+
+Route::get('/suppliers', function () {
+    return view('suppliers');
 })->middleware(['auth', 'verified'])->name('proveedores');
-Route::get('/dashboard/materials', function () {
-    return view('dashboard');
+
+Route::get('/materials', function () {
+    return view('materials');
 })->middleware(['auth', 'verified'])->name('materiales');
-Route::get('/dashboard/machinery', function () {
-    return view('dashboard');
+
+Route::get('/machinery', function () {
+    return view('machinerys');
 })->middleware(['auth', 'verified'])->name('maquinaria');
 
 Route::middleware('auth')->group(function () {
