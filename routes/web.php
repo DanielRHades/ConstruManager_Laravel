@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MaterialsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MaterialsController;
@@ -31,9 +32,10 @@ Route::get('/suppliers', function () {
     return view('suppliers');
 })->middleware(['auth', 'verified'])->name('proveedores');
 
-Route::get('/materials', function () {
-    return view('materials');
-})->middleware(['auth', 'verified'])->name('materiales');
+Route::get('/materials', [MaterialsController::class, 'getItems'])->middleware(['auth', 'verified'])->name('materiales');
+Route::get('/materials/{id}', [MaterialsController::class, 'getItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified']);
+Route::get('/materials/{id}/{category}', [MaterialsController::class, 'getItemRelationInfo'])->where(['id' => '[0-9]+', 'category' => '[a-z]+'])->middleware(['auth', 'verified']);
+
 
 Route::get('/machinery', function () {
     return view('machinery');

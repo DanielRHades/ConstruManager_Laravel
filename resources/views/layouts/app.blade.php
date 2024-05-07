@@ -20,18 +20,24 @@
     @include('layouts.navigation')
     <!-- Page Content -->
     <div class="flex-1 relative bg-gray-100">
-        <div id="side-menu" class="static absolute w-1/4 left-0 p-5 border h-full overflow-y-auto">
+        <div id="side-menu" class="absolute w-1/4 left-0 p-5 border h-full overflow-y-auto">
             @yield('side-menu-items')
         </div>
         <main class="absolute w-3/4 right-0 p-5 border h-full">
-            <div class="h-1/3 overflow-y-auto w-full">
+            <div id="selected-main" class="hidden max-h-1/3 overflow-y-auto w-full mb-5">
+                <div class="relative">
+                    <div class="absolute right-0 top-0 flex">
+                        <img id="edit-item" src="{{asset('img/editar.png')}}" class="h-6 me-4" href="">
+                        <img id="delete-item" src="{{asset('img/borrar.png')}}" class="h-6" href="">
+                    </div>
+                </div>
                 @yield('selected-main')
             </div>
-            <div class="h-2/3 border overflow-y-auto w-full">
-                <div class="border-b flex">
+            <div class="max-h-2/3 overflow-y-auto w-full">
+                <div id="buttons-submenu" class="hidden border-b flex">
                     @yield('buttons-submenu')
                 </div>
-                <div class="mt-2">
+                <div id="selected-submenu" class="hidden mt-2 border-b border-x">
                     @yield('selected-submenu')
                 </div>
             </div>
