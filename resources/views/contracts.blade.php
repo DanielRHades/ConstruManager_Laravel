@@ -41,25 +41,25 @@
 <table class="table-auto w-full">
     <tr class="border-b">
         <th>Nombre</th>
-        <th>Cargo</th>
+        <th>Tipo</th>
         <th>Correo</th>
         <th>Teléfono</th>
     </tr>
     <tr class="border-b">
-        <th>Daniel Leonardo Rodríguez Hernández</th>
-        <th>Cargo 1</th>
+        <th>Empresa HL Projects</th>
+        <th>Jurídico</th>
         <th>daniel@compañia.com</th>
         <th>3214567756</th>
     </tr>
     <tr class="border-b">
         <th>Daniel Leonardo Rodríguez Hernández</th>
-        <th>Cargo 1</th>
+        <th>Natural</th>
         <th>daniel@compañia.com</th>
         <th>3214567756</th>
     </tr>
     <tr class="border-b">
         <th>Daniel Leonardo Rodríguez Hernández</th>
-        <th>Cargo 1</th>
+        <th>Natural</th>
         <th>daniel@compañia.com</th>
         <th>3214567756</th>
     </tr>
