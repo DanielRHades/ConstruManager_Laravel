@@ -1,7 +1,8 @@
 @extends('layouts.app')
 @section('side-menu-items')
-<x-side-menu-item primary="Cemento Bolsa 20KG" route="momazos.com" />
-<x-side-menu-item primary="Grava Bolsa 20KG" route="momazos.com" />
+@foreach ($materials as $material)
+<x-side-menu-item primary="{{$material->name}}" id="{{$material->id}}" />
+@endforeach
 
 <div class="fixed bottom-12">
     <button id="openPopupButton_left" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>
@@ -17,45 +18,82 @@
     document.getElementById('openPopupButton_left').addEventListener('click', function() {
         document.getElementById('form_add_material').classList.toggle('hidden');
     });
+
+    let currentItemId
+    document.addEventListener('DOMContentLoaded', function() {
+        const sideMenuItems = document.querySelectorAll('.side-menu-item');
+        sideMenuItems.forEach(item => {
+            item.addEventListener('click', function(event) {
+                currentItemId = this.id;
+                document.getElementById('selected-main').classList.remove('hidden')
+                document.getElementById('buttons-submenu').classList.remove('hidden')
+                fetch(`/materials/${currentItemId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data = data[0]
+                        document.getElementById('name').innerText = data.name;
+                        document.getElementById('quantity').innerText = data.quantity;
+                        document.getElementById('unit_price').innerText = data.unit_price;
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    });
 </script>
 
 @endsection
 @section('selected-main')
 <div class="relative">
-    <a class="text-4xl font-bold">Cemento Bolsa 20KG</a>
+    <a id="name" class="text-4xl font-bold"></a>
 </div>
 <div class="mt-4">
-    <h1 class="text-xl font-semibold">Cantidad: <span class="text-customYellow">100</span></h1>
+    <strong class="text-xl font-semibold">Cantidad: </strong><span id="quantity" class="text-customYellow"></span>
 </div>
 <div class="mt-2">
-    <strong class="text-xl font-semibold">Precio/Unidad: <span class="text-customYellow">20000</span></strong>
+    <strong class="text-xl font-semibold">Precio/Unidad: </strong><span id="unit_price" class="text-customYellow"></span>
 </div>
 @endsection
 @section('buttons-submenu')
-<x-button-submenu text="Proveedores" />
+<x-button-submenu id="suppliers" text="Proveedores" />
+<script>
+    let currentCategory
+    document.addEventListener('DOMContentLoaded', function() {
+        const submenuButtons = document.querySelectorAll('.button-submenu');
+        submenuButtons.forEach(item => {
+            item.addEventListener('click', function(event) {
+                debugger
+                currentCategory = this.id;
+                document.getElementById('selected-submenu').classList.remove('hidden')
+                document.getElementById('table-sub-submenu').innerHTML = ""
+                fetch(`/materials/${currentItemId}/${currentCategory}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.map((entry) => {
+                            document.getElementById('table-sub-submenu').insertAdjacentHTML('beforeend', `
+<tr class="border-b">
+    <td>${entry.name}</td>
+    <td>${entry.email}</td>
+    <td>${entry.phone}</td>
+</tr>                        `)
+                        })
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    });
+</script>
 @endsection
 @section('selected-submenu')
-<table class="table-auto w-full">
-    <tr class="border-b">
-        <th>Nombre</th>
-        <th>Correo</th>
-        <th>Teléfono</th>
-    </tr>
-    <tr class="border-b">
-        <th>Daniel Leonardo Rodríguez Hernández</th>
-        <th>daniel@compañia.com</th>
-        <th>3214567756</th>
-    </tr>
-    <tr class="border-b">
-        <th>Daniel Leonardo Rodríguez Hernández</th>
-        <th>daniel@compañia.com</th>
-        <th>3214567756</th>
-    </tr>
-    <tr class="border-b">
-        <th>Daniel Leonardo Rodríguez Hernández</th>
-        <th>daniel@compañia.com</th>
-        <th>3214567756</th>
-    </tr>
+<table id="table-submenu" class="table-auto w-full ">
+    <thead>
+        <tr class="border-b">
+            <th class="text-start">Nombre</th>
+            <th class="text-start">Correo</th>
+            <th class="text-start">Teléfono</th>
+        </tr>
+    </thead>
+    <tbody id="table-sub-submenu">
+    </tbody>
 </table>
 
 <div class="fixed bottom-12 right-8">
