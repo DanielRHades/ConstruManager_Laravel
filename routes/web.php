@@ -45,14 +45,13 @@ Route::get('/contracts', [ContractsController::class, 'getItems'])->middleware([
 Route::get('/contracts/{id}', [ContractsController::class, 'getItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified']);
 Route::get('/contracts/{id}/{category}', [ContractsController::class, 'getItemRelationInfo'])->where(['id' => '[0-9]+', 'category' => '[a-z]+'])->middleware(['auth', 'verified']);
 
-
+Route::post('/suppliers', [SuppliersController::class, 'store'])->name('suppliers.store');
 
 Route::post('/materials', [MaterialsController::class, 'store'])->name('materials.store');
 
 Route::post('/machinery', [MachineryController::class, 'store'])->name('machinery.store');
 
-Route::post('/suppliers', [SuppliersController::class, 'store'])->name('suppliers.store');
-
+Route::post('/suppliers/suppliers_materials', [Suppliers_MaterialsController::class, 'store'])->name('suppliers_materials.store');
 //
 
 Route::middleware('auth')->group(function () {

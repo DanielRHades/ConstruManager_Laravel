@@ -25,6 +25,7 @@
         sideMenuItems.forEach(item => {
             item.addEventListener('click', function(event) {
                 currentItemId = this.id;
+                document.getElementById('material_id').value = currentItemId;
                 document.getElementById('selected-main').classList.remove('hidden')
                 document.getElementById('selected-submenu').classList.add('hidden')
                 document.getElementById('buttons-submenu').classList.remove('hidden')
