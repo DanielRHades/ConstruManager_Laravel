@@ -10,4 +10,8 @@ class Contract extends Model
     use HasFactory;
 
     protected $table = 'contract';
+
+    protected $fillable = ['description', 'date'];
+
+    public $timestamps = false;
 }

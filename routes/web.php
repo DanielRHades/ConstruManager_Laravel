@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\MaterialsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -7,8 +8,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SuppliersController;
 use App\Http\Controllers\Suppliers_MaterialsController;
 use App\Http\Controllers\MachineryController;
-use App\Models\Supplier;
 use App\Http\Controllers\ContractsController;
+use App\Http\Controllers\CustomersController;
+use App\Http\Controllers\Contracts_MaterialsController;
+use App\Http\Controllers\Contracts_MachineryController;
+use App\Http\Controllers\RecordsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +52,19 @@ Route::get('/contracts/{id}/{category}', [ContractsController::class, 'getItemRe
 Route::post('/suppliers', [SuppliersController::class, 'store'])->name('suppliers.store');
 
 Route::post('/materials', [MaterialsController::class, 'store'])->name('materials.store');
+
+Route::post('/contracts', [ContractsController::class, 'store'])->name('contracts.store');
+
+Route::post('/contracts/customers', [CustomersController::class, 'store'])->name('customers.store');
+
+Route::post('/contracts/contacts', [ContactsController::class, 'store'])->name('contacts.store');
+
+Route::post('/contracts/materials', [Contracts_MaterialsController::class, 'store'])->name('contracts_materials.store');
+
+Route::post('/contracts/machinery', [Contracts_MachineryController::class, 'store'])->name('contracts_machinery.store');
+
+Route::post('/contracts/records', [RecordsController::class, 'store'])->name('records.store');
+
 
 Route::post('/machinery', [MachineryController::class, 'store'])->name('machinery.store');
 

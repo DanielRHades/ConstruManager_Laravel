@@ -2,28 +2,39 @@
     <div class="bg-white p-8 rounded-lg shadow-md w-96">
         <h2 class="text-lg font-bold mb-4">Agregar Maquinaria</h2>
         
-        <form>
+        <form form method="POST" action="{{ route('contracts_machinery.store') }}">
             @csrf
             <div class="mb-4">
                 <label class="block text-sm font-semibold mb-2" for="nombre">Nombre</label>
-                <select id="nombre" name="nombre" class="w-full border-gray-300 rounded-md p-2">
-                    <!-- Aquí se debe llenar con las opciones desde la base de datos -->
-                </select>
+                <select id="scroll_menu_contract_machinery" name="nombre" class="w-full border-gray-300 rounded-md p-2">
+                    @foreach($machineries as $machinery)
+                        <option value="{{ $machinery->id }}">{{ $machinery->name }}</option>
+                    @endforeach
+                </select> 
             </div>
             <div class="mb-4">
                 <label class="block text-sm font-semibold mb-2" for="dias">Días</label>
                 <input type="number" id="dias" name="dias" class="w-full border-gray-300 rounded-md p-2">
             </div>
             <div class="flex justify-end">
+                <input type="hidden" name="contract_id_machinery" id="contract_id_machinery" value=""> 
+                <input type="hidden" name="machinery_id" id="machinery_id" value=""> 
                 <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2">Agregar</button>
-                <button type="button" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" onclick="closePopup()">Cancelar</button>
+                <button type="button" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" onclick="closeAddMachineryContract()">Cancelar</button>
             </div>
         </form>
     </div>
 </div>
 
 <script>
-    function closePopup() {
-        document.querySelector('#form_add_existing_machinery').classList.add('hidden');
+        document.getElementById('machinery_id').value = 1;
+
+        document.getElementById('scroll_menu_contract_machinery').addEventListener('change', function() {
+        let machinery_id = this.value;
+        document.getElementById('machinery_id').value = machinery_id;
+    });
+
+    function closeAddMachineryContract() {
+        document.getElementById('form_add_existing_machinery').classList.toggle('hidden');
     }
 </script>

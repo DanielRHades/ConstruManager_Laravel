@@ -2,7 +2,7 @@
     <div class="bg-white p-8 rounded-lg shadow-md w-96">
         <h2 class="text-lg font-bold mb-4">Agregar Registro</h2>
         
-        <form>
+        <form method="POST" action="{{ route('records.store') }}">
             @csrf
             <div class="mb-4">
                 <label class="block text-sm font-semibold mb-2" for="fecha">Fecha</label>
@@ -13,15 +13,16 @@
                 <textarea id="descripcion" name="descripcion" class="w-full border-gray-300 rounded-md p-2"></textarea>
             </div>
             <div class="flex justify-end">
+                <input type="hidden" name="contract_id_record" id="contract_id_record" value="">
                 <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2">Agregar</button>
-                <button type="button" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" onclick="closePopup()">Cancelar</button>
+                <button type="button" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" onclick="closeRecord()">Cancelar</button>
             </div>
         </form>
     </div>
 </div>
 
 <script>
-    function closePopup() {
-        document.querySelector('#form_add_record').classList.add('hidden');
+    function closeRecord() {
+        document.getElementById('form_add_record').classList.add('hidden');
     }
 </script>

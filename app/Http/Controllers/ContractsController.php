@@ -11,13 +11,30 @@ use App\Models\Record;
 
 class ContractsController extends Controller
 {
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'descripcion' => 'required|string|max:255',
+            'fecha' => 'required|string|max:255',
+        ]);
+
+
+        $contract = new Contract();
+        $contract->description = $validatedData['descripcion'];
+        $contract->date = $validatedData['fecha'];
+
+        $contract->save();
+
+        return redirect()->route('contratos')->with('success', 'Contrato agregado exitosamente.');
+    }
     public function getItems()
     {
+        $materials = Material::all();
+        $machineries = Machinery::all();
         $contracts = Contract::select('contract.id', 'contract.date', 'customer.name')
-            ->join('customer', 'customer.contract_id', '=', 'contract.id')
+            ->leftJoin('customer', 'customer.contract_id', '=', 'contract.id')
             ->get();
-
-        return view('contracts', ['contracts' => $contracts]);
+        return view('contracts', ['contracts' => $contracts])->with('materials', $materials)->with('machineries', $machineries);
     }
 
     public function getItemRelationInfo($itemId, $category)
@@ -47,11 +64,14 @@ class ContractsController extends Controller
     }
     public function getItemDetails($itemId)
     {
-        $details = Contract::select('contract.id', 'contract.date', 'contract.description', 'customer.name', 'customer.email', 'customer.type', 'customer.phone')
-            ->join('customer', 'customer.contract_id', '=', 'contract.id') // Use 'contract.id' as the condition
-            ->where('customer.contract_id', '=', $itemId) // Add a condition to filter by $itemId
+        $details =
+            Contract::select('contract.id', 'contract.date', 'contract.description', 'customer.name', 'customer.email', 'customer.type', 'customer.phone')
+            ->leftJoin('customer', 'customer.contract_id', '=', 'contract.id')
+            ->where('contract.id', $itemId) // Filter by $itemId for contracts
+            ->orWhereNull('customer.contract_id') // Include contracts without associated customers
             ->get();
 
+
         return response()->json($details);
-    }   //
+    }
 }

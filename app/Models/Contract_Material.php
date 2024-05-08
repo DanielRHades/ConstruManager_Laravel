@@ -5,13 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Record extends Model
+class Contract_Material extends Model
 {
-    use HasFactory;
+    protected $table = 'contract_material';
 
-    protected $table = 'record';
-
-    protected $fillable = ['date', 'description','contract_id'];
+    protected $fillable = ['contract_id', 'material_id', 'quantity'];
 
     public $timestamps = false;
 }
