@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('side-menu-items')
-<x-side-menu-item primary="Pedro Perez" secondary="3203123001" route="momazos.com" />
-<x-side-menu-item primary="Luis Jaimes" secondary="3203123001" route="momazos.com" />
-
+@foreach ($suppliers as $supplier)
+<x-side-menu-item primary="{{$supplier->name}}" secondary="{{$supplier->phone}}" id="{{$supplier->id}}" />
+@endforeach
 <div class="fixed bottom-12">
     <button id="openPopupButton_left" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>
 </div>
@@ -17,41 +17,80 @@
     document.getElementById('openPopupButton_left').addEventListener('click', function() {
         document.getElementById('form_add_supplier').classList.toggle('hidden');
     });
+    let currentItemId
+    document.addEventListener('DOMContentLoaded', function() {
+        const sideMenuItems = document.querySelectorAll('.side-menu-item');
+        sideMenuItems.forEach(item => {
+            item.addEventListener('click', function(event) {
+                currentItemId = this.id;
+                document.getElementById('selected-main').classList.remove('hidden')
+                document.getElementById('selected-submenu').classList.add('hidden')
+                document.getElementById('buttons-submenu').classList.remove('hidden')
+                fetch(`/suppliers/${currentItemId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data = data[0]
+                        document.getElementById('name').innerText = data.name;
+                        document.getElementById('e-mail').innerText = data.email;
+                        document.getElementById('phone').innerText = data.phone;
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    });
 </script>
 
 @endsection
 @section('selected-main')
 <div class="relative">
-    <a class="text-4xl font-bold">Pedro Perez</a>
+    <a id="name" class="text-4xl font-bold"></a>
 </div>
 <div class="mt-4">
-    <h1 class="text-xl font-semibold">Email: <span class="text-customYellow">pedro@gmail.com</span></h1>
+    <strong class="text-xl font-semibold">Email: </strong><span id="e-mail" class="text-customYellow"></span>
 </div>
 <div class="mt-2">
-    <strong class="text-xl font-semibold">Telefono: <span class="text-customYellow">3203123001</span></strong>
+    <strong class="text-xl font-semibold">Teléfono: </strong><span id="phone" class="text-customYellow"></span>
 </div>
 @endsection
 @section('buttons-submenu')
-<x-button-submenu text="Materiales" />
+<x-button-submenu id="materials" text="Materiales" />
+<script>
+    let currentCategory
+    document.addEventListener('DOMContentLoaded', function() {
+        const submenuButtons = document.querySelectorAll('.button-submenu');
+        submenuButtons.forEach(item => {
+            item.addEventListener('click', function(event) {
+                currentCategory = this.id;
+                document.getElementById('selected-submenu').classList.remove('hidden')
+                document.getElementById('table-sub-submenu').innerHTML = ""
+                fetch(`/suppliers/${currentItemId}/${currentCategory}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.map((entry) => {
+                            document.getElementById('table-sub-submenu').insertAdjacentHTML('beforeend', `
+<tr class="border-b">
+    <td>${entry.name}</td>
+    <td>${entry.unit_price}</td>
+</tr>                        `)
+                        })
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    });
+</script>
+
 @endsection
 @section('selected-submenu')
-<table class="table-auto w-full">
-    <tr class="border-b">
-        <th>Nombre</th>
-        <th>Precio/Unidad</th>
-    </tr>
-    <tr class="border-b">
-        <th>Cemento Bolsa 10KG</th>
-        <th>10000</th>
-    </tr>
-    <tr class="border-b">
-        <th>Grava Bolsa 30KG</th>
-        <th>50000</th>
-    </tr>
-    <tr class="border-b">
-        <th>Arena Bolsa 15KG</th>
-        <th>40000</th>
-    </tr>
+<table id="table-submenu" class="table-auto w-full ">
+    <thead>
+        <tr class="border-b">
+            <th class="text-start">Nombre</th>
+            <th class="text-start">Precio/Unidad</th>
+        </tr>
+    </thead>
+    <tbody id="table-sub-submenu">
+    </tbody>
 </table>
 
 <div class="fixed bottom-12 right-8">

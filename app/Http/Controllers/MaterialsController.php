@@ -11,20 +11,20 @@ class MaterialsController extends Controller
 
     public function store(Request $request)
     {
-    
+
         $validatedData = $request->validate([
-            'nombre' => 'required|string|max:255', 
-            'cantidad' => 'required|integer|min:0', 
-            'precio' => 'required|numeric|min:0', 
+            'nombre' => 'required|string|max:255',
+            'cantidad' => 'required|integer|min:0',
+            'precio' => 'required|numeric|min:0',
         ]);
-    
+
         $material = new Material();
-        $material->name = $validatedData['nombre']; 
-        $material->quantity = $validatedData['cantidad']; 
-        $material->unit_price = $validatedData['precio']; 
+        $material->name = $validatedData['nombre'];
+        $material->quantity = $validatedData['cantidad'];
+        $material->unit_price = $validatedData['precio'];
 
         $material->save();
-        
+
         return redirect()->route('materiales')->with('success', 'Material agregado exitosamente.');
     }
 
@@ -37,16 +37,16 @@ class MaterialsController extends Controller
 
     public function getItemRelationInfo($itemId, $category)
     {
-        $suppliers = null;
+        $data = null;
         switch ($category) {
             case 'suppliers':
-                $suppliers =  Supplier::select('supplier.*')
+                $data =  Supplier::select('supplier.*')
                     ->join('supplier_material', 'supplier.id', '=', 'supplier_material.supplier_id')
                     ->where('supplier_material.material_id', '=', $itemId)
                     ->get();
                 break;
         }
-        return response()->json($suppliers);
+        return response()->json($data);
     }
     public function getItemDetails($itemId)
     {

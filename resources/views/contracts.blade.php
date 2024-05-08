@@ -1,7 +1,8 @@
 @extends('layouts.app')
 @section('side-menu-items')
-<x-side-menu-item primary="Contrato 1" primary2="01/03/2024" secondary="Luis Eduardo Jaimes Hernández" route="momazos.com" />
-<x-side-menu-item primary="Contrato 2" primary2="05/03/2024" secondary="Luis Eduardo Jaimes Hernández" route="momazos.com" />
+@foreach ($contracts as $contract)
+<x-side-menu-item id="{{$contract->id}}" primary="Contrato {{$contract->id}}" primary2="{{$contract->date}}" secondary="{{$contract->name}}" route="momazos.com" />
+@endforeach
 
 <div class="fixed bottom-12">
     <button id="openPopupButton_left" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>
@@ -23,48 +24,94 @@
     document.getElementById('openPopupButton_left').addEventListener('click', function() {
         document.getElementById('form_add_contract').classList.toggle('hidden');
     });
+    let currentItemId
+    document.addEventListener('DOMContentLoaded', function() {
+        const sideMenuItems = document.querySelectorAll('.side-menu-item');
+        sideMenuItems.forEach(item => {
+            item.addEventListener('click', function(event) {
+                currentItemId = this.id;
+                document.getElementById('selected-main').classList.remove('hidden')
+                document.getElementById('selected-submenu').classList.add('hidden')
+                document.getElementById('buttons-submenu').classList.remove('hidden')
+                fetch(`/contracts/${currentItemId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data = data[0]
+                        document.getElementById('id').innerText = data.id;
+                        document.getElementById('date').innerText = data.date;
+                        document.getElementById('description').innerText = data.description;
+                        document.getElementById('name').innerText = data.name;
+                        document.getElementById('e-mail').innerText = data.email;
+                        document.getElementById('phone').innerText = data.phone;
+                        document.getElementById('type').innerText = data.type;
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    });
 </script>
 
 @endsection
 @section('selected-main')
-<h1 class="text-4xl font-bold">Contrato 1 - 07/05/2024</h1>
+<h1 class="text-4xl font-bold">Contrato <a id="id"></a> - <a id="date"></a></h1>
 </br>
-<p>Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident. Nostrud officia pariatur ut officia. Sit irure elit esse ea nulla sunt ex occaecat reprehenderit commodo officia dolor Lorem duis laboris cupidatat officia voluptate. Culpa proident adipisicing id nulla nisi laboris ex in Lorem sunt duis officia eiusmod. Aliqua reprehenderit commodo ex non excepteur duis sunt velit enim. Voluptate laboris sint cupidatat ullamco ut ea consectetur et est culpa et culpa duis.</p>
+<p id="description"></p>
 </br>
-<strong class="bottom-0">Luis Eduardo Jaimes Hernández - Luis@compañia.com - 3156843255 - Persona natural</strong>
+<strong class="bottom-0"><a id="name"></a> - <a id="e-mail"></a> - <a id="phone"></a> - <a id="type"></a></strong>
 @endsection
 @section('buttons-submenu')
-<x-button-submenu text="Contactos" />
-<x-button-submenu text="Materiales" />
-<x-button-submenu text="Maquinarias" />
-<x-button-submenu text="Registros" />
+<x-button-submenu id="contacts" text="Contactos" />
+<x-button-submenu id="materials" text="Materiales" />
+<x-button-submenu id="machinery" text="Maquinarias" />
+<x-button-submenu id="records" text="Registros" />
+<script>
+    let currentCategory
+    document.addEventListener('DOMContentLoaded', function() {
+        const submenuButtons = document.querySelectorAll('.button-submenu');
+        submenuButtons.forEach(item => {
+            item.addEventListener('click', function(event) {
+                currentCategory = this.id;
+                switch (currentCategory) {
+                    case 'contacts':
+                        document.getElementById('table-submenu-head').innerHTML = '<th class="text-start">Nombre</th><th class="text-start">Cargo</th><th class="text-start">Correo</th><th class="text-start">Teléfono</th>'
+
+                        break;
+                    case 'materials':
+                        document.getElementById('table-submenu-head').innerHTML = '<th class="text-start">Nombre</th><th class="text-start">Cantidad</th><th class="text-start">Precio/Unidad</th>'
+                        break;
+                    case 'machinery':
+                        document.getElementById('table-submenu-head').innerHTML = '<th class="text-start">Nombre</th><th class="text-start">Días</th><th class="text-start">Precio/Día</th>'
+                        break;
+                    case 'records':
+                        document.getElementById('table-submenu-head').innerHTML = '<th class="text-start">Código</th><th class="text-start">Fecha</th>'
+                        break;
+                }
+                document.getElementById('selected-submenu').classList.remove('hidden')
+                document.getElementById('table-sub-submenu').innerHTML = ""
+                fetch(`/contracts/${currentItemId}/${currentCategory}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.map((entry) => {
+                            document.getElementById('table-sub-submenu').insertAdjacentHTML('beforeend', `
+<tr class="border-b">
+${Object.values(entry).map((p)=>`<td>${p}</td>`).join('')}
+</tr>                        `)
+                        })
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    });
+</script>
 @endsection
 @section('selected-submenu')
-<table class="table-auto w-full">
-    <tr class="border-b">
-        <th>Nombre</th>
-        <th>Rol</th>
-        <th>Correo</th>
-        <th>Teléfono</th>
-    </tr>
-    <tr class="border-b">
-        <th>Pedro Sanchez</th>
-        <th>Ingeniero</th>
-        <th>daniel@compañia.com</th>
-        <th>3214567756</th>
-    </tr>
-    <tr class="border-b">
-        <th>Daniel Leonardo Rodríguez Hernández</th>
-        <th>Arquitecto</th>
-        <th>daniel@compañia.com</th>
-        <th>3214567756</th>
-    </tr>
-    <tr class="border-b">
-        <th>Daniel Leonardo Rodríguez Hernández</th>
-        <th>Encargado de obra</th>
-        <th>daniel@compañia.com</th>
-        <th>3214567756</th>
-    </tr>
+<table id="table-submenu" class="table-auto w-full ">
+    <thead>
+        <tr id="table-submenu-head" class="border-b">
+        </tr>
+    </thead>
+    <tbody id="table-sub-submenu">
+    </tbody>
 </table>
 
 <div class="fixed bottom-12 right-8">

@@ -26,6 +26,7 @@
             item.addEventListener('click', function(event) {
                 currentItemId = this.id;
                 document.getElementById('selected-main').classList.remove('hidden')
+                document.getElementById('selected-submenu').classList.add('hidden')
                 document.getElementById('buttons-submenu').classList.remove('hidden')
                 fetch(`/materials/${currentItemId}`)
                     .then(response => response.json())
@@ -61,7 +62,6 @@
         const submenuButtons = document.querySelectorAll('.button-submenu');
         submenuButtons.forEach(item => {
             item.addEventListener('click', function(event) {
-                debugger
                 currentCategory = this.id;
                 document.getElementById('selected-submenu').classList.remove('hidden')
                 document.getElementById('table-sub-submenu').innerHTML = ""

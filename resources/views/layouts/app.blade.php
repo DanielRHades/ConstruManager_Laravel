@@ -24,7 +24,7 @@
             @yield('side-menu-items')
         </div>
         <main class="absolute w-3/4 right-0 p-5 border h-full">
-            <div id="selected-main" class="max-h-1/3 overflow-y w-full mb-5">
+            <div id="selected-main" class="hidden max-h-1/3 overflow-y w-full mb-5">
                 <div class="relative">
                     <div class="absolute right-0 top-0 flex">
                         <img id="edit-item" src="{{asset('img/editar.png')}}" class="h-6 me-4" href="">
@@ -33,11 +33,11 @@
                 </div>
                 @yield('selected-main')
             </div>
-            <div class="max-h-2/3 overflow-y w-full">
-                <div id="buttons-submenu" class="border-b flex">
+            <div id="submenu" class="max-h-2/3 overflow-y w-full">
+                <div id="buttons-submenu" class="hidden border-b flex">
                     @yield('buttons-submenu')
                 </div>
-                <div id="selected-submenu" class="mt-2 border-b border-x">
+                <div id="selected-submenu" class="hidden mt-2 border-b border-x">
                     @yield('selected-submenu')
                 </div>
             </div>

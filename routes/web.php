@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SuppliersController;
 use App\Http\Controllers\Suppliers_MaterialsController;
 use App\Http\Controllers\MachineryController;
-
+use App\Models\Supplier;
+use App\Http\Controllers\ContractsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,17 +25,6 @@ Route::get('/', function () {
     return view('auth.register');
 });
 
-Route::get('/contracts', function () {
-    return view('contracts');
-})->middleware(['auth', 'verified'])->name('contratos');
-
-Route::get('/suppliers', function () {
-    return view('suppliers');
-})->middleware(['auth', 'verified'])->name('proveedores');
-
-Route::get('/machinery', function () {
-    return view('machinery');
-})->middleware(['auth', 'verified'])->name('maquinarias');
 
 //
 
@@ -44,11 +34,18 @@ Route::get('/materials/{id}', [MaterialsController::class, 'getItemDetails'])->w
 
 Route::get('/materials/{id}/{category}', [MaterialsController::class, 'getItemRelationInfo'])->where(['id' => '[0-9]+', 'category' => '[a-z]+'])->middleware(['auth', 'verified']);
 
-//
+Route::get('/machinery', [MachineryController::class, 'getItems'])->middleware(['auth', 'verified'])->name('maquinarias');
+Route::get('/machinery/{id}', [MachineryController::class, 'getItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified']);
 
-//Route::get('/materials', [MaterialsController::class, 'index'])->middleware(['auth', 'verified'])->name('materiales');
+Route::get('/suppliers', [SuppliersController::class, 'getItems'])->middleware(['auth', 'verified'])->name('proveedores');
+Route::get('/suppliers/{id}', [SuppliersController::class, 'getItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified']);
+Route::get('/suppliers/{id}/{category}', [SuppliersController::class, 'getItemRelationInfo'])->where(['id' => '[0-9]+', 'category' => '[a-z]+'])->middleware(['auth', 'verified']);
 
-Route::get('/suppliers', [SuppliersController::class, 'index'])->middleware(['auth', 'verified'])->name('proveedores');
+Route::get('/contracts', [ContractsController::class, 'getItems'])->middleware(['auth', 'verified'])->name('contratos');
+Route::get('/contracts/{id}', [ContractsController::class, 'getItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified']);
+Route::get('/contracts/{id}/{category}', [ContractsController::class, 'getItemRelationInfo'])->where(['id' => '[0-9]+', 'category' => '[a-z]+'])->middleware(['auth', 'verified']);
+
+
 
 Route::post('/materials', [MaterialsController::class, 'store'])->name('materials.store');
 
