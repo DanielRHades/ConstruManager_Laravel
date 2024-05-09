@@ -64,6 +64,7 @@
         submenuButtons.forEach(item => {
             item.addEventListener('click', function(event) {
                 currentCategory = this.id;
+                document.getElementById(currentCategory).disabled = true
                 document.getElementById('selected-submenu').classList.remove('hidden')
                 document.getElementById('table-sub-submenu').innerHTML = ""
                 fetch(`/materials/${currentItemId}/${currentCategory}`)
@@ -77,6 +78,9 @@
     <td>${entry.phone}</td>
 </tr>                        `)
                         })
+                    })
+                    .then(() => {
+                        document.getElementById(currentCategory).disabled = false
                     })
                     .catch(error => console.error('Error:', error));
             });

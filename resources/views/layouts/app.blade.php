@@ -27,8 +27,8 @@
             <div id="selected-main" class="hidden max-h-1/3 overflow-y w-full mb-5">
                 <div class="relative">
                     <div class="absolute right-0 top-0 flex">
-                        <img id="edit-item" src="{{asset('img/editar.png')}}" class="h-6 me-4" href="">
-                        <img id="delete-item" src="{{asset('img/borrar.png')}}" class="h-6" href="">
+                        <img id="edit-item" src="{{asset('img/editar.png')}}" class="h-6 me-4 cursor-pointer" href="">
+                        <img id="delete-item" src="{{asset('img/borrar.png')}}" class="h-6 cursor-pointer" href="">
                     </div>
                 </div>
                 @yield('selected-main')

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('side-menu-items')
 @foreach ($contracts as $contract)
-<x-side-menu-item id="{{$contract->id}}" primary="Contrato {{$contract->id}}" primary2="{{$contract->date}}" secondary="{{$contract->name}}" route="momazos.com" />
+<x-side-menu-item id="{{$contract->id}}" primary="Contrato {{$contract->id}}" primary2="{{implode('/',explode('-',$contract->date))}}" secondary="{{$contract->name}}" route="momazos.com" />
 @endforeach
 
 <div class="fixed bottom-12">
@@ -15,6 +15,12 @@
 <div id="form_add_contract" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
     <div class="bg-white p-8 rounded-lg shadow-md w-96">
         @include('components.form_add_contract')
+    </div>
+</div>
+
+<div id="form_edit_contract" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        @include('components.form_edit_contract')
     </div>
 </div>
 
@@ -49,20 +55,25 @@
 </div>
 
 <script>
-    document.getElementById('openPopupButton_left_1').addEventListener('click', function() {
-        document.getElementById('form_add_contract').classList.toggle('hidden');
-    });
-
-    document.getElementById('openPopupButton_left_2').addEventListener('click', function() {
-        document.getElementById('form_add_customer').classList.toggle('hidden');
-    });
-
     let currentItemId
     document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('openPopupButton_left_1').addEventListener('click', function() {
+            document.getElementById('form_add_contract').classList.toggle('hidden');
+        });
+        document.getElementById('edit-item').addEventListener('click', function() {
+            document.getElementById('descripcion').setAttribute('value', document.getElementById('description').innerText)
+            document.getElementById('fecha').setAttribute('value', document.getElementById('date').innerText)
+            document.getElementById('form_edit_contract').classList.toggle('hidden');
+        });
+
+        document.getElementById('openPopupButton_left_2').addEventListener('click', function() {
+            document.getElementById('form_add_customer').classList.toggle('hidden');
+        });
         const sideMenuItems = document.querySelectorAll('.side-menu-item');
         sideMenuItems.forEach(item => {
             item.addEventListener('click', function(event) {
                 currentItemId = this.id;
+                console.log(currentItemId)
                 document.getElementById('contract_id_customer').value = currentItemId;
                 document.getElementById('contract_id_contact').value = currentItemId;
                 document.getElementById('contract_id_material').value = currentItemId;
@@ -76,8 +87,14 @@
                     .then(data => {
                         data = data[0]
                         document.getElementById('id').innerText = data.id;
-                        document.getElementById('date').innerText = data.date;
+                        document.getElementById('date').innerText = data.date.split('-').join('/');
                         document.getElementById('description').innerText = data.description;
+                        if (data.name) {
+                            document.getElementById('openPopupButton_left_2').classList.add('hidden')
+                        } else {
+                            document.getElementById('openPopupButton_left_2').classList.remove('hidden')
+
+                        }
                         document.getElementById('name').innerText = data.name;
                         document.getElementById('e-mail').innerText = data.email;
                         document.getElementById('phone').innerText = data.phone;
@@ -109,11 +126,12 @@
         submenuButtons.forEach(item => {
             item.addEventListener('click', function(event) {
                 currentCategory = this.id;
+                document.getElementById(currentCategory).disabled = true
                 switch (currentCategory) {
                     case 'contacts':
                         document.getElementById('table-submenu-head').innerHTML = '<th class="text-start">Nombre</th><th class="text-start">Cargo</th><th class="text-start">Correo</th><th class="text-start">Teléfono</th>'
                         document.getElementById('openPopupButton_right').addEventListener('click', function() {
-                            document.getElementById('form_add_contact').classList.toggle('hidden');
+                            document.getElementById('form_add_contact').classList.remove('hidden');
                             document.getElementById('form_add_existing_material_contract').classList.add('hidden');
                             document.getElementById('form_add_existing_machinery').classList.add('hidden');
                             document.getElementById('form_add_record').classList.add('hidden');
@@ -122,7 +140,7 @@
                     case 'materials':
                         document.getElementById('table-submenu-head').innerHTML = '<th class="text-start">Nombre</th><th class="text-start">Cantidad</th><th class="text-start">Precio/Unidad</th>'
                         document.getElementById('openPopupButton_right').addEventListener('click', function() {
-                            document.getElementById('form_add_existing_material_contract').classList.toggle('hidden');
+                            document.getElementById('form_add_existing_material_contract').classList.remove('hidden');
                             document.getElementById('form_add_contact').classList.add('hidden');
                             document.getElementById('form_add_existing_machinery').classList.add('hidden');
                             document.getElementById('form_add_record').classList.add('hidden');
@@ -131,7 +149,7 @@
                     case 'machinery':
                         document.getElementById('table-submenu-head').innerHTML = '<th class="text-start">Nombre</th><th class="text-start">Días</th><th class="text-start">Precio/Día</th>'
                         document.getElementById('openPopupButton_right').addEventListener('click', function() {
-                            document.getElementById('form_add_existing_machinery').classList.toggle('hidden');
+                            document.getElementById('form_add_existing_machinery').classList.remove('hidden');
                             document.getElementById('form_add_contact').classList.add('hidden');
                             document.getElementById('form_add_existing_material_contract').classList.add('hidden');
                             document.getElementById('form_add_record').classList.add('hidden');
@@ -140,7 +158,7 @@
                     case 'records':
                         document.getElementById('table-submenu-head').innerHTML = '<th class="text-start">Código</th><th class="text-start">Fecha</th>'
                         document.getElementById('openPopupButton_right').addEventListener('click', function() {
-                            document.getElementById('form_add_record').classList.toggle('hidden');
+                            document.getElementById('form_add_record').classList.remove('hidden');
                             document.getElementById('form_add_existing_machinery').classList.add('hidden');
                             document.getElementById('form_add_existing_material_contract').classList.add('hidden');
                             document.getElementById('form_add_contact').classList.add('hidden');
@@ -158,6 +176,9 @@
 ${Object.values(entry).map((p)=>`<td>${p}</td>`).join('')}
 </tr>                        `)
                         })
+                    })
+                    .then(() => {
+                        document.getElementById(currentCategory).disabled = false
                     })
                     .catch(error => console.error('Error:', error));
             });

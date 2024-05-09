@@ -67,11 +67,25 @@ class ContractsController extends Controller
         $details =
             Contract::select('contract.id', 'contract.date', 'contract.description', 'customer.name', 'customer.email', 'customer.type', 'customer.phone')
             ->leftJoin('customer', 'customer.contract_id', '=', 'contract.id')
-            ->where('contract.id', $itemId) // Filter by $itemId for contracts
-            ->orWhereNull('customer.contract_id') // Include contracts without associated customers
+            ->where('contract.id', $itemId)
             ->get();
 
 
         return response()->json($details);
+    }
+    public function updateItemDetails($itemId, Request $request)
+    {
+        $validatedData = $request->validate([
+            'descripcion' => 'required|string|max:255',
+            'fecha' => 'required|string|max:255',
+        ]);
+
+
+        $contract = Contract::find($itemId);
+        $contract->description = $validatedData['descripcion'];
+        $contract->date = $validatedData['fecha'];
+
+        $contract->save();
+        return response(0);
     }
 }
