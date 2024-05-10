@@ -68,6 +68,12 @@ class MaterialsController extends Controller
         $material->unit_price = $validatedData['precio'];
 
         $material->save();
-        return response(0);
+        return response();
+    }
+    public function deleteItem(Request $request)
+    {
+        $itemId = $request->input('elementId');
+        Material::find($itemId)->delete();
+        return redirect()->route('materiales')->with('success', 'Material eliminado exitosamente.');
     }
 }

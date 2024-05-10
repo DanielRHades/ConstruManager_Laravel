@@ -43,7 +43,17 @@
             </div>
         </main>
     </div>
+    <div id="form_delete" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+        <div class="bg-white p-8 rounded-lg shadow-md w-96">
+            @include('components.form_delete')
+        </div>
     </div>
+    <script>
+        document.getElementById('delete-item').addEventListener('click', function() {
+            document.getElementById('form_delete').classList.remove('hidden')
+            document.getElementById('elementId').value = currentItemId
+        })
+    </script>
 </body>
 
 </html>

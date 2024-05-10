@@ -86,6 +86,12 @@ class ContractsController extends Controller
         $contract->date = $validatedData['fecha'];
 
         $contract->save();
-        return response(0);
+        return response();
+    }
+    public function deleteItem(Request $request)
+    {
+        $itemId = $request->input('elementId');
+        Contract::find($itemId)->delete();
+        return redirect()->route('contratos')->with('success', 'Contrato eliminado exitosamente.');
     }
 }

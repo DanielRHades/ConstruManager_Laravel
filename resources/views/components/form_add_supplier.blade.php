@@ -1,8 +1,8 @@
 <div id="form_add_supplier" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
     <div class="bg-white p-8 rounded-lg shadow-md w-96">
         <h2 class="text-lg font-bold mb-4">Agregar Proveedor</h2>
-        
-        <form method="POST" action="{{ route('suppliers.store') }}" >
+
+        <form method="POST" action="{{ route('suppliers.store') }}">
             @csrf
             <div class="mb-4">
                 <label class="block text-sm font-semibold mb-2" for="nombre">Nombre</label>

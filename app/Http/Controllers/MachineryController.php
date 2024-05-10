@@ -49,6 +49,12 @@ class MachineryController extends Controller
         $machinery->day_price = $validatedData['precio'];
 
         $machinery->save();
-        return response(0);
+        return response();
+    }
+    public function deleteItem(Request $request)
+    {
+        $itemId = $request->input('elementId');
+        Machinery::find($itemId)->delete();
+        return redirect()->route('maquinarias')->with('success', 'Maquinaria eliminada exitosamente.');
     }
 }

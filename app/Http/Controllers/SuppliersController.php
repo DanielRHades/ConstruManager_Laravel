@@ -64,6 +64,12 @@ class SuppliersController extends Controller
         $supplier->phone = $validatedData['telefono'];
 
         $supplier->save();
-        return response(0);
+        return response();
+    }
+    public function deleteItem(Request $request)
+    {
+        $itemId = $request->input('elementId');
+        Supplier::find($itemId)->delete();
+        return redirect()->route('proveedores')->with('success', 'Proveedor eliminado exitosamente.');
     }
 }

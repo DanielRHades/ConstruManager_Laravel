@@ -9,7 +9,7 @@
 </div>
 
 <div class="fixed bottom-12 left-20">
-    <button id="openPopupButton_left_2" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>
+    <button id="openPopupButton_left_2" class="hidden bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>
 </div>
 
 <div id="form_add_contract" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
