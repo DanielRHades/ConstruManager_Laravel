@@ -1,66 +1,41 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistema de Administración de Materiales y Maquinaria - ConstruManager
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+---
 
-## About Laravel
+## Descripción:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+ConstruManager es una aplicación web desarrollada en Laravel diseñada para administrar eficientemente los materiales y maquinaria de una empresa de construcción. Proporciona una plataforma integral para gestionar inventarios, contratos, proveedores y seguimiento del contrato con un apartado de registros.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Características Principales:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Gestión de Inventarios**: Permite mantener un registro detallado de los materiales y maquinaria disponibles, incluyendo información como nombre, precio/unidad o precio/dia y cantidad en stock.
 
-## Learning Laravel
+- **Gestión de Contratos**: Permite crear contratos entre la empresa y sus clientes para la transacción de materiales y maquinaria. Los contratos incluyen el cliente con el cual se realiza, sus contactos en caso de ser varios encargados, los materiales y maquinarias solicitadas con su cantidad, el precio/unidad o precio/dia elegido en el inventario, y registros de los diferentes avances en la entrega de los items solicitados.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Administración de Proveedores**: Facilita la gestión de proveedores, con la capacidad de agregar, editar y eliminar proveedores, así como visualizar su información de contacto.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **Seguimiento de Avances**: Los contratos pueden contener registros de avances en la entrega de materiales y maquinaria solicitados por los clientes. Esto permite mantener un seguimiento detallado del progreso de cada interacción con el cliente.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Instalación:
 
-## Laravel Sponsors
+1. Clona el repositorio desde GitHub: `git clone https://github.com/DanielRHades/ConstruManager_Laravel.git`
+2. Accede al directorio del proyecto: `cd ContruManager_Laravel`
+3. Instala las dependencias de Composer: `composer install`
+4. Crea una copia del archivo `.env.example` y renómbrala como `.env`
+5. Genera la clave de la aplicación: `php artisan key:generate`
+6. Configura la base de datos en el archivo `.env`
+7. Inicia el servicio de MySQL y Apache en XAMPP
+8. Ejecuta las migraciones de la base de datos: `php artisan migrate`
+9. Instala las dependencias de Node.js: `npm install`
+10. Compila los activos de frontend: `npm run dev`
+11. Inicia el servidor: `php artisan serve`
+12. Accede a la aplicación desde tu navegador: `http://localhost:8000`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Requisitos del Sistema:
 
-### Premium Partners
+- PHP >= 8.0.2
+- Composer
+- npm
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Este README proporciona una visión general de la aplicación web ConstruManager y cómo instalarla, incluyendo el paso adicional para compilar los activos de frontend con `npm run dev`.
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
