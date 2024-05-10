@@ -35,13 +35,16 @@ Route::get('/', function () {
 Route::get('/materials', [MaterialsController::class, 'getItems'])->middleware(['auth', 'verified'])->name('materiales');
 Route::get('/materials/{id}', [MaterialsController::class, 'getItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified']);
 Route::get('/materials/{id}/{category}', [MaterialsController::class, 'getItemRelationInfo'])->where(['id' => '[0-9]+', 'category' => '[a-z]+'])->middleware(['auth', 'verified']);
+Route::post('/materials/{id}/edit', [MaterialsController::class, 'updateItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified']);
 
 Route::get('/machinery', [MachineryController::class, 'getItems'])->middleware(['auth', 'verified'])->name('maquinarias');
 Route::get('/machinery/{id}', [MachineryController::class, 'getItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified']);
+Route::post('/machinery/{id}/edit', [MachineryController::class, 'updateItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified']);
 
 Route::get('/suppliers', [SuppliersController::class, 'getItems'])->middleware(['auth', 'verified'])->name('proveedores');
 Route::get('/suppliers/{id}', [SuppliersController::class, 'getItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified']);
 Route::get('/suppliers/{id}/{category}', [SuppliersController::class, 'getItemRelationInfo'])->where(['id' => '[0-9]+', 'category' => '[a-z]+'])->middleware(['auth', 'verified']);
+Route::post('/suppliers/{id}/edit', [SuppliersController::class, 'updateItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified']);
 
 Route::get('/contracts', [ContractsController::class, 'getItems'])->middleware(['auth', 'verified'])->name('contratos');
 Route::get('/contracts/{id}', [ContractsController::class, 'getItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified']);

@@ -6,11 +6,11 @@
             @csrf
             <div class="mb-4">
                 <label class="block text-sm font-semibold mb-2" for="descripcion">Descripción</label>
-                <input type="text" id="descripcion" name="descripcion" class="w-full border-gray-300 rounded-md p-2">
+                <input type="text" id="description-edit" name="descripcion" class="w-full border-gray-300 rounded-md p-2">
             </div>
             <div class="mb-4">
                 <label class="block text-sm font-semibold mb-2" for="fecha">Fecha</label>
-                <input type="date" id="fecha" name="fecha" class="w-full border-gray-300 rounded-md p-2">
+                <input type="date" id="date-edit" name="fecha" class="w-full border-gray-300 rounded-md p-2">
             </div>
             <div class="flex justify-end">
                 <button type="button" onclick="submitForm()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2">Agregar</button>
@@ -42,5 +42,24 @@
             .catch(error => {
                 console.error('Error:', error);
             });
+        fetch(`/contracts/${currentItemId}`)
+            .then(response => response.json())
+            .then(data => {
+                data = data[0]
+                document.getElementById(`${currentItemId}-main-text-2`).innerText = data.date.split('-').join('/');
+                document.getElementById('id').innerText = data.id;
+                document.getElementById('date').innerText = data.date.split('-').join('/');
+                document.getElementById('description').innerText = data.description;
+                if (data.name) {
+                    document.getElementById('openPopupButton_left_2').classList.add('hidden')
+                } else {
+                    document.getElementById('openPopupButton_left_2').classList.remove('hidden')
+                }
+                document.getElementById('name').innerText = data.name;
+                document.getElementById('e-mail').innerText = data.email;
+                document.getElementById('phone').innerText = data.phone;
+                document.getElementById('type').innerText = data.type;
+            })
+            .catch(error => console.error('Error:', error));
     }
 </script>

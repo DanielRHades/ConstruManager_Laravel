@@ -13,18 +13,28 @@
         @include('components.form_add_machinery')
     </div>
 </div>
+<div id="form_edit_machinery" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        @include('components.form_edit_machinery')
+    </div>
+</div>
 
 <script>
-    document.getElementById('openPopupButton_left').addEventListener('click', function() {
-        document.getElementById('form_add_machinery').classList.toggle('hidden');
-    });
     let currentItemId
     document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('openPopupButton_left').addEventListener('click', function() {
+            document.getElementById('form_add_machinery').classList.toggle('hidden');
+        });
+        document.getElementById('edit-item').addEventListener('click', function() {
+            document.getElementById('name-edit').value = document.getElementById('name').innerText
+            document.getElementById('quantity-edit').value = document.getElementById('quantity').innerText
+            document.getElementById('price-edit').value = document.getElementById('day_price').innerText
+            document.getElementById('form_edit_machinery').classList.toggle('hidden');
+        });
         const sideMenuItems = document.querySelectorAll('.side-menu-item');
         sideMenuItems.forEach(item => {
             item.addEventListener('click', function(event) {
                 currentItemId = this.id;
-                document.getElementById('selected-main').classList.remove('hidden')
                 fetch(`/machinery/${currentItemId}`)
                     .then(response => response.json())
                     .then(data => {
@@ -33,6 +43,7 @@
                         document.getElementById('quantity').innerText = data.quantity;
                         document.getElementById('day_price').innerText = data.day_price;
                     })
+                    .then(() => document.getElementById('selected-main').classList.remove('hidden'))
                     .catch(error => console.error('Error:', error));
             });
         });
@@ -40,13 +51,9 @@
 </script>
 @endsection
 @section('selected-main')
-<div class="relative">
-    <a id="name" class="text-4xl font-bold"></a>
-</div>
-<div class="mt-4">
-    <strong class="text-xl font-semibold">Cantidad: </strong><span id="quantity" class="text-customYellow"></span>
-</div>
-<div class="mt-2">
-    <strong class="text-xl font-semibold">Precio/Día: </strong><span id="day_price" class="text-customYellow"></span>
-</div>
+<h1 id="name" class="text-4xl font-bold"></h1>
+<br>
+<strong class="text-xl font-semibold">Cantidad: </strong><span id="quantity" class="text-customYellow"></span>
+<br>
+<strong class="text-xl font-semibold">Precio/Día: </strong><span id="day_price" class="text-customYellow"></span>
 @endsection

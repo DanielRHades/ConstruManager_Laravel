@@ -50,4 +50,20 @@ class SuppliersController extends Controller
         $details = Supplier::where('id', $itemId)->select('name', 'email', 'phone')->get();
         return response()->json($details);
     }
+    public function updateItemDetails($itemId, Request $request)
+    {
+        $validatedData = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'email' => 'required|string|max:255',
+            'telefono' => 'required|numeric|min:0',
+        ]);
+
+        $supplier = Supplier::find($itemId);
+        $supplier->name = $validatedData['nombre'];
+        $supplier->email = $validatedData['email'];
+        $supplier->phone = $validatedData['telefono'];
+
+        $supplier->save();
+        return response(0);
+    }
 }

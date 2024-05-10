@@ -53,4 +53,21 @@ class MaterialsController extends Controller
         $details = Material::where('id', $itemId)->select('name', 'quantity', 'unit_price')->get();
         return response()->json($details);
     }
+    public function updateItemDetails($itemId, Request $request)
+    {
+
+        $validatedData = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'cantidad' => 'required|integer|min:0',
+            'precio' => 'required|numeric|min:0',
+        ]);
+
+        $material = Material::find($itemId);
+        $material->name = $validatedData['nombre'];
+        $material->quantity = $validatedData['cantidad'];
+        $material->unit_price = $validatedData['precio'];
+
+        $material->save();
+        return response(0);
+    }
 }

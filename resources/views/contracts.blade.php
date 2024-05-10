@@ -61,8 +61,8 @@
             document.getElementById('form_add_contract').classList.toggle('hidden');
         });
         document.getElementById('edit-item').addEventListener('click', function() {
-            document.getElementById('descripcion').setAttribute('value', document.getElementById('description').innerText)
-            document.getElementById('fecha').setAttribute('value', document.getElementById('date').innerText)
+            document.getElementById('description-edit').value = document.getElementById('description').innerText
+            document.getElementById('date-edit').value = document.getElementById('date').innerText.split('/').join('-')
             document.getElementById('form_edit_contract').classList.toggle('hidden');
         });
 
@@ -73,7 +73,6 @@
         sideMenuItems.forEach(item => {
             item.addEventListener('click', function(event) {
                 currentItemId = this.id;
-                console.log(currentItemId)
                 document.getElementById('contract_id_customer').value = currentItemId;
                 document.getElementById('contract_id_contact').value = currentItemId;
                 document.getElementById('contract_id_material').value = currentItemId;
