@@ -49,7 +49,7 @@ class MachineryController extends Controller
         $machinery->day_price = $validatedData['precio'];
 
         $machinery->save();
-        return response();
+        return response(0);
     }
     public function deleteItem(Request $request)
     {

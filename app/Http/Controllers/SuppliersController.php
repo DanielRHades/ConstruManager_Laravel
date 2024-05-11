@@ -28,7 +28,7 @@ class SuppliersController extends Controller
     public function getItems()
     {
         $materials = Material::all();
-        $suppliers = Supplier::select('id', 'name', 'phone')->get();
+        $suppliers = Supplier::select('id', 'name', 'email')->get();
         return view('suppliers', ['suppliers' => $suppliers])->with('materials', $materials);
     }
 
@@ -64,7 +64,7 @@ class SuppliersController extends Controller
         $supplier->phone = $validatedData['telefono'];
 
         $supplier->save();
-        return response();
+        return response(0);
     }
     public function deleteItem(Request $request)
     {

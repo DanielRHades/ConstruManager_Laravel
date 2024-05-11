@@ -31,6 +31,8 @@ Route::get('/', function () {
 
 
 //
+Route::get('/records/{id}', [RecordsController::class, 'getItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified']);
+Route::post('/records/{id}/edit', [RecordsController::class, 'updateItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified']);
 
 Route::get('/materials', [MaterialsController::class, 'getItems'])->middleware(['auth', 'verified'])->name('materiales');
 Route::get('/materials/{id}', [MaterialsController::class, 'getItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified']);
@@ -54,6 +56,9 @@ Route::get('/contracts/{id}', [ContractsController::class, 'getItemDetails'])->w
 Route::get('/contracts/{id}/{category}', [ContractsController::class, 'getItemRelationInfo'])->where(['id' => '[0-9]+', 'category' => '[a-z]+'])->middleware(['auth', 'verified']);
 Route::post('/contracts/{id}/edit', [ContractsController::class, 'updateItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified']);
 Route::post('/contracts/delete', [ContractsController::class, 'deleteItem'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('contracts.delete');
+
+Route::get('/suppliers_materials/{supplierId}/{materialId}/delete', [Suppliers_MaterialsController::class, 'deleteRelation'])->where(['supplierId' => '[0-9]+', 'materialId' => '[0-9]+'])->middleware(['auth', 'verified'])->name('contracts.delete');
+
 
 Route::post('/suppliers', [SuppliersController::class, 'store'])->name('suppliers.store');
 

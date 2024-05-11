@@ -1,6 +1,6 @@
 <div id="form_edit_material" class=" fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
     <div class="bg-white p-8 rounded-lg shadow-md w-96">
-        <h2 class="text-lg font-bold mb-4">Agregar Material</h2>
+        <h2 class="text-lg font-bold mb-4">Editar Material</h2>
 
         <form method="POST" id="material_form">
             @csrf
@@ -17,15 +17,15 @@
                 <input type="number" id="price-edit" name="precio" class="w-full border-gray-300 rounded-md p-2">
             </div>
             <div class="flex justify-end">
-                <button type="button" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2" onclick="submitForm()">Agregar</button>
-                <button type="button" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" onclick="closeMaterial()">Cancelar</button>
+                <button type="button" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2" onclick="submitForm()">Actualizar</button>
+                <button type="button" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" onclick="closeEditMaterial()">Cancelar</button>
             </div>
         </form>
     </div>
 </div>
 
 <script>
-    function closeMaterial() {
+    function closeEditMaterial() {
         document.querySelector('#form_edit_material').classList.add('hidden');
     }
 
@@ -41,7 +41,7 @@
                 body: formData
             })
             .then(response => {
-                closeMaterial();
+                closeEditMaterial();
             })
             .catch(error => {
                 console.error('Error:', error);

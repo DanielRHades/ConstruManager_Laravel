@@ -17,15 +17,15 @@
                 <input type="number" id="price-edit" name="precio" class="w-full border-gray-300 rounded-md p-2">
             </div>
             <div class="flex justify-end">
-                <button type="button" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2" onclick="submitForm()">Agregar</button>
-                <button type="button" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" onclick="closeMachinery()">Cancelar</button>
+                <button type="button" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2" onclick="submitForm()">Actualizar</button>
+                <button type="button" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" onclick="closeEditMachinery()">Cancelar</button>
             </div>
         </form>
     </div>
 </div>
 
 <script>
-    function closeMachinery() {
+    function closeEditMachinery() {
         document.querySelector('#form_edit_machinery').classList.add('hidden');
     }
 
@@ -41,7 +41,7 @@
                 body: formData
             })
             .then(response => {
-                closeMachinery();
+                closeEditMachinery();
             })
             .catch(error => {
                 console.error('Error:', error);

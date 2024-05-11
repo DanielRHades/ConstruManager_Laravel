@@ -53,6 +53,11 @@
         @include('components.form_add_record')
     </div>
 </div>
+<div id="form_edit_record" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        @include('components.form_edit_record')
+    </div>
+</div>
 
 <script>
     let currentItemId
@@ -120,6 +125,7 @@
 <x-button-submenu id="records" text="Registros" />
 <script>
     let currentCategory
+    let currentRecordId
     document.addEventListener('DOMContentLoaded', function() {
         const submenuButtons = document.querySelectorAll('.button-submenu');
         submenuButtons.forEach(item => {
@@ -155,7 +161,7 @@
                         });
                         break;
                     case 'records':
-                        document.getElementById('table-submenu-head').innerHTML = '<th class="text-start">Código</th><th class="text-start">Fecha</th>'
+                        document.getElementById('table-submenu-head').innerHTML = '<th class="text-start">Código</th><th class="text-start">Fecha</th><th class="text-start"></th>'
                         document.getElementById('openPopupButton_right').addEventListener('click', function() {
                             document.getElementById('form_add_record').classList.remove('hidden');
                             document.getElementById('form_add_existing_machinery').classList.add('hidden');
@@ -169,12 +175,36 @@
                 fetch(`/contracts/${currentItemId}/${currentCategory}`)
                     .then(response => response.json())
                     .then(data => {
+
                         data.map((entry) => {
-                            document.getElementById('table-sub-submenu').insertAdjacentHTML('beforeend', `
-<tr class="border-b">
-${Object.values(entry).map((p)=>`<td>${p}</td>`).join('')}
-</tr>                        `)
+                            let row
+                            if (currentCategory === 'records') {
+                                row = `
+                               <tr class="record-${entry.id} border-b" id="${entry.id}">
+                                ${Object.values(entry).map((p) => `<td>${p}</td>`).join('')}`;
+                                row += `<td><img src="@php echo asset('img/editar.png'); @endphp" class="record-edit-button h-4 cursor-pointer" ></td>`;
+                            } else {
+                                row = `
+                               <tr class="border-b">
+                                ${Object.values(entry).map((p) => `<td>${p}</td>`).join('')}`;
+                            }
+                            row += `</tr>`;
+                            document.getElementById('table-sub-submenu').insertAdjacentHTML('beforeend', row);
                         })
+                        document.querySelectorAll('.record-edit-button').forEach(item => {
+                            item.addEventListener('click', () => {
+                                currentRecordId = item.parentElement.parentElement.id
+                                fetch(`/records/${currentRecordId}`)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        document.getElementById('record-description-edit').value = data.description
+                                        document.getElementById('record-date-edit').value = data.date
+                                    })
+                                document.getElementById('form_edit_record').classList.toggle('hidden');
+                            })
+                        })
+
+
                     })
                     .then(() => {
                         document.getElementById(currentCategory).disabled = false

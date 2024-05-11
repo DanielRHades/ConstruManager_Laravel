@@ -86,7 +86,7 @@ class ContractsController extends Controller
         $contract->date = $validatedData['fecha'];
 
         $contract->save();
-        return response();
+        return response(0);
     }
     public function deleteItem(Request $request)
     {

@@ -13,19 +13,19 @@
                 <input type="date" id="date-edit" name="fecha" class="w-full border-gray-300 rounded-md p-2">
             </div>
             <div class="flex justify-end">
-                <button type="button" onclick="submitForm()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2">Agregar</button>
-                <button type="button" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" onclick="closeContract()">Cancelar</button>
+                <button type="button" onclick="submitContractForm()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2">Actualizar</button>
+                <button type="button" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" onclick="closeEditContract()">Cancelar</button>
             </div>
         </form>
     </div>
 </div>
 
 <script>
-    function closeContract() {
+    function closeEditContract() {
         document.getElementById('form_edit_contract').classList.add('hidden');
     }
 
-    function submitForm() {
+    function submitContractForm() {
         const form = document.getElementById('contract_form');
 
         form.action = `/contracts/${currentItemId}/edit`
@@ -37,7 +37,7 @@
                 body: formData
             })
             .then(response => {
-                closeContract();
+                closeEditContract();
             })
             .catch(error => {
                 console.error('Error:', error);

@@ -26,4 +26,26 @@ class RecordsController extends Controller
 
         return redirect()->route('contratos')->with('success', 'Contrato agregado exitosamente.');
     }
+    public function getItemDetails($itemId)
+    {
+        $description = Record::select('description', 'date')->where('id', $itemId)->first();
+        return response()->json($description);
+    }
+    public function updateItemDetails($itemId, Request $request)
+    {
+        $validatedData = $request->validate([
+            'fecha' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:255',
+
+        ]);
+
+
+        $record = Record::find($itemId);
+        $record->date = $validatedData['fecha'];
+        $record->description = $validatedData['descripcion'];
+
+        $record->save();
+
+        return response(0);
+    }
 }

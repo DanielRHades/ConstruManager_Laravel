@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('side-menu-items')
 @foreach ($suppliers as $supplier)
-<x-side-menu-item primary="{{$supplier->name}}" secondary="{{$supplier->phone}}" id="{{$supplier->id}}" />
+<x-side-menu-item primary="{{$supplier->name}}" secondary="{{$supplier->email}}" id="{{$supplier->id}}" />
 @endforeach
 <div class="fixed bottom-12">
     <button id="openPopupButton_left" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>

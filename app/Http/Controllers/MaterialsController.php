@@ -35,17 +35,12 @@ class MaterialsController extends Controller
         return view('materials', ['materials' => $material])->with('suppliers', $suppliers);
     }
 
-    public function getItemRelationInfo($itemId, $category)
+    public function getItemRelationInfo($itemId)
     {
-        $data = null;
-        switch ($category) {
-            case 'suppliers':
-                $data =  Supplier::select('supplier.*')
-                    ->join('supplier_material', 'supplier.id', '=', 'supplier_material.supplier_id')
-                    ->where('supplier_material.material_id', '=', $itemId)
-                    ->get();
-                break;
-        }
+        $data =  Supplier::select('supplier.*')
+            ->join('supplier_material', 'supplier.id', '=', 'supplier_material.supplier_id')
+            ->where('supplier_material.material_id', '=', $itemId)
+            ->get();
         return response()->json($data);
     }
     public function getItemDetails($itemId)
@@ -68,7 +63,7 @@ class MaterialsController extends Controller
         $material->unit_price = $validatedData['precio'];
 
         $material->save();
-        return response();
+        return response(0);
     }
     public function deleteItem(Request $request)
     {

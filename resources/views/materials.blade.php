@@ -57,7 +57,7 @@
                     })
                     .catch(error => console.error('Error:', error));
                 document.getElementById('table-sub-submenu').innerHTML = ""
-                fetch(`/materials/${currentItemId}/${currentCategory}`)
+                fetch(`/materials/${currentItemId}/suppliers`)
                     .then(response => response.json())
                     .then(data => {
                         data.map((entry) => {
@@ -66,7 +66,17 @@
     <td>${entry.name}</td>
     <td>${entry.email}</td>
     <td>${entry.phone}</td>
+    <td><img id="${entry.id}" class="delete-supplier-button cursor-pointer h-2" src="{{asset('img/borrar-x.png')}}"></td>
 </tr>                        `)
+                        })
+                    })
+                    .then(() => {
+                        document.querySelectorAll('.delete-supplier-button').forEach(item => {
+                            item.addEventListener('click', () => {
+                                const supplierToDelete = item.id
+                                fetch(`/suppliers_materials/${supplierToDelete}/${currentItemId}`)
+
+                            })
                         })
                     })
                     .then(() => executing = false)
@@ -86,9 +96,6 @@
 @endsection
 @section('buttons-submenu')
 <x-button-submenu id="suppliers" text="Proveedores" />
-<script>
-    const currentCategory = 'suppliers'
-</script>
 @endsection
 @section('selected-submenu')
 <table id="table-submenu" class="table-auto w-full ">
@@ -97,6 +104,7 @@
             <th class="text-start">Nombre</th>
             <th class="text-start">Correo</th>
             <th class="text-start">Teléfono</th>
+            <th class="text-start"></th>
         </tr>
     </thead>
     <tbody id="table-sub-submenu">
