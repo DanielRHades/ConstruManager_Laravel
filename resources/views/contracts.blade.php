@@ -8,9 +8,7 @@
     <button id="openPopupButton_left_1" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>
 </div>
 
-<div class="fixed bottom-12 left-20">
-    <button id="openPopupButton_left_2" class="hidden bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>
-</div>
+
 
 <div id="form_add_contract" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
     <div class="bg-white p-8 rounded-lg shadow-md w-96">
@@ -19,19 +17,8 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('openPopupButton_left_1').addEventListener('click', function() {
-            document.getElementById('form_add_contract').classList.toggle('hidden');
-        });
-        document.getElementById('edit-item').addEventListener('click', function() {
-            document.getElementById('description-edit').value = document.getElementById('description').innerText
-            document.getElementById('date-edit').value = document.getElementById('date').innerText.split('/').join('-')
-            document.getElementById('form_edit_contract').classList.toggle('hidden');
-        });
-
-        document.getElementById('openPopupButton_left_2').addEventListener('click', function() {
-            document.getElementById('form_add_customer').classList.toggle('hidden');
-        });
+    document.getElementById('openPopupButton_left_1').addEventListener('click', function() {
+        document.getElementById('form_add_contract').classList.toggle('hidden');
     });
 </script>
 
@@ -56,8 +43,6 @@
 </div>
 
 
-
-
 @section('selected-main')
 <div class="relative">
     <div class="absolute right-0 top-0 flex">
@@ -69,7 +54,27 @@
 </br>
 <p id="description">{{$details->description}}</p>
 </br>
-<strong class="bottom-0"><a id="name">{{$details->name}}</a> - <a id="e-mail">{{$details->email}}</a> - <a id="phone">{{$details->phone}}</a> - <a id="type">{{$details->type}}</a></strong>
+@if (!empty($details->name))
+<strong class="bottom-0"><a id="name">{{ $details->name }}</a> - <a id="e-mail">{{ $details->email }}</a> - <a id="phone">{{ $details->phone }}</a> - <a id="type">{{ $details->type }}</a></strong>
+
+@else
+<div class="fixed bottom-12 left-20">
+    <button id="openPopupButton_left_2" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>
+</div>
+<script>
+    document.getElementById('openPopupButton_left_2').addEventListener('click', function() {
+        document.getElementById('form_add_customer').classList.toggle('hidden');
+        document.getElementById('contract_id_customer').value = "{{$details->id}}"
+    });
+</script>
+@endif
+<script>
+    document.getElementById('edit-item').addEventListener('click', function() {
+        document.getElementById('description-edit').value = document.getElementById('description').innerText
+        document.getElementById('date-edit').value = document.getElementById('date').innerText.split('/').join('-')
+        document.getElementById('form_edit_contract').classList.toggle('hidden');
+    });
+</script>
 @endsection
 @section('buttons-submenu')
 <x-button-submenu id="contacts" text="Contactos" route="{{route('contracts.categories',['id'=>$details->id,'category'=>'contacts'])}}" />
@@ -260,7 +265,21 @@
                     <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-2 left-0 right-0 ">
                 </form>
             </td>
-            <td><img src="{{asset('img/editar.png')}}" class="cursor-pointer h-2" /></td>
+            <td><img id="record-button-{{$entry->id}}" src="{{asset('img/editar.png')}}" class="cursor-pointer h-2" /></td>
+            <script>
+                document.getElementById('record-button-{{$entry->id}}').addEventListener('click', function() {
+                    document.getElementById('form_edit_record').classList.toggle('hidden')
+                    document.getElementById('record_id').value = "{{$entry->id}}"
+                    document.getElementById('contract_id').value = "{{$details->id}}"
+                    fetch('/records/{{$entry->id}}')
+                        .then(response => response.json())
+                        .then(data => {
+                            document.getElementById('record-description-edit').value = data.description
+                            document.getElementById('record-date-edit').value = data.date
+                        })
+                        .catch(err => console.log(err))
+                })
+            </script>
         </tr>
         @endforeach
         @endif

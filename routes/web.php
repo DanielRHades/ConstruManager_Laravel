@@ -33,6 +33,10 @@ Route::get('/', function () {
 
 //
 
+Route::get('/records/{id}', [RecordsController::class, 'getItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('records.details');
+Route::post('/records/edit/', [RecordsController::class, 'updateItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('records.edit');
+Route::post('/records/delete/', [RecordsController::class, 'deleteItem'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('records.delete');
+
 Route::get('/materials', [MaterialsController::class, 'getItems'])->middleware(['auth', 'verified'])->name('materiales');
 Route::get('/materials/{id}', [MaterialsController::class, 'getItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('materials.details');
 Route::post('/materials/edit/{id}', [MaterialsController::class, 'updateItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('materials.edit');
@@ -55,7 +59,6 @@ Route::post('/contracts/edit/{id}', [ContractsController::class, 'updateItemDeta
 Route::get('/contracts/delete/{id}', [ContractsController::class, 'deleteItem'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('contracts.delete');
 
 Route::post('/suppliers_materials/delete', [Suppliers_MaterialsController::class, 'deleteRelation'])->middleware(['auth', 'verified'])->name('suppliers_materials.delete');
-Route::post('/records/delete/', [RecordsController::class, 'deleteItem'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('records.delete');
 Route::post('/contacts/delete/', [ContactsController::class, 'deleteItem'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('contacts.delete');
 Route::post('/contracts_materials/delete/', [Contracts_MaterialsController::class, 'deleteItem'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('contracts_materials.delete');
 Route::post('/contracts_machinery/delete/', [Contracts_MachineryController::class, 'deleteItem'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('contracts_machinery.delete');

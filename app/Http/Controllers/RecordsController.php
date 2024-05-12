@@ -34,7 +34,7 @@ class RecordsController extends Controller
         $description = Record::select('description', 'date')->where('id', $itemId)->first();
         return response()->json($description);
     }
-    public function updateItemDetails($itemId, Request $request)
+    public function updateItemDetails(Request $request)
     {
         $validatedData = $request->validate([
             'fecha' => 'required|string|max:255',
@@ -43,13 +43,13 @@ class RecordsController extends Controller
         ]);
 
 
-        $record = Record::find($itemId);
+        $record = Record::find($request->record_id);
         $record->date = $validatedData['fecha'];
         $record->description = $validatedData['descripcion'];
 
         $record->save();
 
-        return response(0);
+        return redirect()->route($request->current_route, ['id' => $request->contract_id, 'category' => 'records']);
     }
     public function deleteItem(Request $request)
     {

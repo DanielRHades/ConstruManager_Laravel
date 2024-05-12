@@ -26,6 +26,6 @@ class CustomersController extends Controller
 
         $customer->save();
 
-        return redirect()->route('contratos')->with('success', 'Customer agregado exitosamente.');
+        return redirect()->route('contracts.details', ['id' => $validatedData['contract_id_customer']])->with('success', 'Customer agregado exitosamente.');
     }
 }
