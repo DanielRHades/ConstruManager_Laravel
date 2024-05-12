@@ -13,7 +13,7 @@ use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\Contracts_MaterialsController;
 use App\Http\Controllers\Contracts_MachineryController;
 use App\Http\Controllers\RecordsController;
-use App\Models\Contract_Machinery;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +27,7 @@ use App\Models\Contract_Machinery;
 */
 
 Route::get('/', function () {
-    return view('auth.register');
+    return view('auth.login');
 });
 
 

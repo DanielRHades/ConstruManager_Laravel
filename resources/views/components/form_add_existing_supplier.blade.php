@@ -26,6 +26,8 @@
 </div>
 
 <script>
+    document.getElementById('supplier_id').value = 1;
+
     document.getElementById('scroll_menu_material').addEventListener('change', function() {
         let materialId = this.value;
         document.getElementById('supplier_id').value = materialId;
