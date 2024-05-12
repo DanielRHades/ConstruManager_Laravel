@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('side-menu-items')
 @foreach ($contracts as $contract)
-<x-side-menu-item id="{{$contract->id}}" primary="Contrato {{$contract->id}}" primary2="{{implode('/',explode('-',$contract->date))}}" secondary="{{$contract->name}}" route="momazos.com" />
+<x-side-menu-item id="{{$contract->id}}" primary="Contrato {{$contract->id}}" primary2="{{implode('/',explode('-',$contract->date))}}" secondary="{{$contract->name}}" section="contracts" />
 @endforeach
 
 <div class="fixed bottom-12">
@@ -18,49 +18,7 @@
     </div>
 </div>
 
-<div id="form_edit_contract" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-    <div class="bg-white p-8 rounded-lg shadow-md w-96">
-        @include('components.form_edit_contract')
-    </div>
-</div>
-
-<div id="form_add_customer" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-    <div class="bg-white p-8 rounded-lg shadow-md w-96">
-        @include('components.form_add_customer')
-    </div>
-</div>
-
-<div id="form_add_contact" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-    <div class="bg-white p-8 rounded-lg shadow-md w-96">
-        @include('components.form_add_contact')
-    </div>
-</div>
-
-<div id="form_add_existing_material_contract" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-    <div class="bg-white p-8 rounded-lg shadow-md w-96">
-        @include('components.form_add_existing_material_contract')
-    </div>
-</div>
-
-<div id="form_add_existing_machinery" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-    <div class="bg-white p-8 rounded-lg shadow-md w-96">
-        @include('components.form_add_existing_machinery')
-    </div>
-</div>
-
-<div id="form_add_record" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-    <div class="bg-white p-8 rounded-lg shadow-md w-96">
-        @include('components.form_add_record')
-    </div>
-</div>
-<div id="form_edit_record" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-    <div class="bg-white p-8 rounded-lg shadow-md w-96">
-        @include('components.form_edit_record')
-    </div>
-</div>
-
 <script>
-    let currentItemId
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('openPopupButton_left_1').addEventListener('click', function() {
             document.getElementById('form_add_contract').classList.toggle('hidden');
@@ -74,159 +32,253 @@
         document.getElementById('openPopupButton_left_2').addEventListener('click', function() {
             document.getElementById('form_add_customer').classList.toggle('hidden');
         });
-        const sideMenuItems = document.querySelectorAll('.side-menu-item');
-        sideMenuItems.forEach(item => {
-            item.addEventListener('click', function(event) {
-                currentItemId = this.id;
-                document.getElementById('contract_id_customer').value = currentItemId;
-                document.getElementById('contract_id_contact').value = currentItemId;
-                document.getElementById('contract_id_material').value = currentItemId;
-                document.getElementById('contract_id_machinery').value = currentItemId;
-                document.getElementById('contract_id_record').value = currentItemId;
-                document.getElementById('selected-main').classList.remove('hidden')
-                document.getElementById('selected-submenu').classList.add('hidden')
-                document.getElementById('buttons-submenu').classList.remove('hidden')
-                fetch(`/contracts/${currentItemId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        data = data[0]
-                        document.getElementById('id').innerText = data.id;
-                        document.getElementById('date').innerText = data.date.split('-').join('/');
-                        document.getElementById('description').innerText = data.description;
-                        if (data.name) {
-                            document.getElementById('openPopupButton_left_2').classList.add('hidden')
-                        } else {
-                            document.getElementById('openPopupButton_left_2').classList.remove('hidden')
-
-                        }
-                        document.getElementById('name').innerText = data.name;
-                        document.getElementById('e-mail').innerText = data.email;
-                        document.getElementById('phone').innerText = data.phone;
-                        document.getElementById('type').innerText = data.type;
-                    })
-                    .catch(error => console.error('Error:', error));
-            });
-        });
     });
 </script>
 
 @endsection
+@if(!empty($details))
+<div id="form_edit_contract" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        <x-form_edit_contract id="{{$details->id}}" />
+    </div>
+</div>
+
+<div id="form_add_customer" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        @include('components.form_add_customer')
+    </div>
+</div>
+
+<div id="form_delete" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        <x-form-delete section="contracts" id="{{$details->id}}" />
+    </div>
+</div>
+
+
+
+
 @section('selected-main')
-<h1 class="text-4xl font-bold">Contrato <a id="id"></a> - <a id="date"></a></h1>
+<div class="relative">
+    <div class="absolute right-0 top-0 flex">
+        <img id="edit-item" src="{{asset('img/editar.png')}}" class="h-6 me-4 cursor-pointer">
+        <img id="delete-item" src="{{asset('img/borrar.png')}}" class="h-6 cursor-pointer">
+    </div>
+</div>
+<h1 class="text-4xl font-bold">Contrato <a id="id">{{$details->id}}</a> - <a id="date">{{$details->date}}</a></h1>
 </br>
-<p id="description"></p>
+<p id="description">{{$details->description}}</p>
 </br>
-<strong class="bottom-0"><a id="name"></a> - <a id="e-mail"></a> - <a id="phone"></a> - <a id="type"></a></strong>
+<strong class="bottom-0"><a id="name">{{$details->name}}</a> - <a id="e-mail">{{$details->email}}</a> - <a id="phone">{{$details->phone}}</a> - <a id="type">{{$details->type}}</a></strong>
 @endsection
 @section('buttons-submenu')
-<x-button-submenu id="contacts" text="Contactos" />
-<x-button-submenu id="materials" text="Materiales" />
-<x-button-submenu id="machinery" text="Maquinarias" />
-<x-button-submenu id="records" text="Registros" />
-<script>
-    let currentCategory
-    let currentRecordId
-    document.addEventListener('DOMContentLoaded', function() {
-        const submenuButtons = document.querySelectorAll('.button-submenu');
-        submenuButtons.forEach(item => {
-            item.addEventListener('click', function(event) {
-                currentCategory = this.id;
-                document.getElementById(currentCategory).disabled = true
-                switch (currentCategory) {
-                    case 'contacts':
-                        document.getElementById('table-submenu-head').innerHTML = '<th class="text-start">Nombre</th><th class="text-start">Cargo</th><th class="text-start">Correo</th><th class="text-start">Teléfono</th>'
-                        document.getElementById('openPopupButton_right').addEventListener('click', function() {
-                            document.getElementById('form_add_contact').classList.remove('hidden');
-                            document.getElementById('form_add_existing_material_contract').classList.add('hidden');
-                            document.getElementById('form_add_existing_machinery').classList.add('hidden');
-                            document.getElementById('form_add_record').classList.add('hidden');
-                        });
-                        break;
-                    case 'materials':
-                        document.getElementById('table-submenu-head').innerHTML = '<th class="text-start">Nombre</th><th class="text-start">Cantidad</th><th class="text-start">Precio/Unidad</th>'
-                        document.getElementById('openPopupButton_right').addEventListener('click', function() {
-                            document.getElementById('form_add_existing_material_contract').classList.remove('hidden');
-                            document.getElementById('form_add_contact').classList.add('hidden');
-                            document.getElementById('form_add_existing_machinery').classList.add('hidden');
-                            document.getElementById('form_add_record').classList.add('hidden');
-                        });
-                        break;
-                    case 'machinery':
-                        document.getElementById('table-submenu-head').innerHTML = '<th class="text-start">Nombre</th><th class="text-start">Días</th><th class="text-start">Precio/Día</th>'
-                        document.getElementById('openPopupButton_right').addEventListener('click', function() {
-                            document.getElementById('form_add_existing_machinery').classList.remove('hidden');
-                            document.getElementById('form_add_contact').classList.add('hidden');
-                            document.getElementById('form_add_existing_material_contract').classList.add('hidden');
-                            document.getElementById('form_add_record').classList.add('hidden');
-                        });
-                        break;
-                    case 'records':
-                        document.getElementById('table-submenu-head').innerHTML = '<th class="text-start">Código</th><th class="text-start">Fecha</th><th class="text-start"></th>'
-                        document.getElementById('openPopupButton_right').addEventListener('click', function() {
-                            document.getElementById('form_add_record').classList.remove('hidden');
-                            document.getElementById('form_add_existing_machinery').classList.add('hidden');
-                            document.getElementById('form_add_existing_material_contract').classList.add('hidden');
-                            document.getElementById('form_add_contact').classList.add('hidden');
-                        });
-                        break;
-                }
-                document.getElementById('selected-submenu').classList.remove('hidden')
-                document.getElementById('table-sub-submenu').innerHTML = ""
-                fetch(`/contracts/${currentItemId}/${currentCategory}`)
-                    .then(response => response.json())
-                    .then(data => {
+<x-button-submenu id="contacts" text="Contactos" route="{{route('contracts.categories',['id'=>$details->id,'category'=>'contacts'])}}" />
+<x-button-submenu id="materials" text="Materiales" route="{{route('contracts.categories',['id'=>$details->id,'category'=>'materials'])}}" />
+<x-button-submenu id="machinery" text="Maquinarias" route="{{route('contracts.categories',['id'=>$details->id,'category'=>'machinery'])}}" />
+<x-button-submenu id="records" text="Registros" route="{{route('contracts.categories',['id'=>$details->id,'category'=>'records'])}}" />
+@if(!empty($category))
+<div class="fixed bottom-12 right-8">
+    <button id="openPopupButton_right" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>
+</div>
+@switch($category)
 
-                        data.map((entry) => {
-                            let row
-                            if (currentCategory === 'records') {
-                                row = `
-                               <tr class="record-${entry.id} border-b" id="${entry.id}">
-                                ${Object.values(entry).map((p) => `<td>${p}</td>`).join('')}`;
-                                row += `<td><img src="@php echo asset('img/editar.png'); @endphp" class="record-edit-button h-4 cursor-pointer" ></td>`;
-                            } else {
-                                row = `
-                               <tr class="border-b">
-                                ${Object.values(entry).map((p) => `<td>${p}</td>`).join('')}`;
-                            }
-                            row += `</tr>`;
-                            document.getElementById('table-sub-submenu').insertAdjacentHTML('beforeend', row);
-                        })
-                        document.querySelectorAll('.record-edit-button').forEach(item => {
-                            item.addEventListener('click', () => {
-                                currentRecordId = item.parentElement.parentElement.id
-                                fetch(`/records/${currentRecordId}`)
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        document.getElementById('record-description-edit').value = data.description
-                                        document.getElementById('record-date-edit').value = data.date
-                                    })
-                                document.getElementById('form_edit_record').classList.toggle('hidden');
-                            })
-                        })
-
-
-                    })
-                    .then(() => {
-                        document.getElementById(currentCategory).disabled = false
-                    })
-                    .catch(error => console.error('Error:', error));
-            });
-        });
-    });
-</script>
-@endsection
+@case('contacts')
+<div id="form_add_contact" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        @include('components.form_add_contact')
+    </div>
+</div>
 @section('selected-submenu')
 <table id="table-submenu" class="table-auto w-full ">
     <thead>
         <tr id="table-submenu-head" class="border-b">
+            <th class="text-left">Nombre</th>
+            <th class="text-left">Rol</th>
+            <th class="text-left">Email</th>
+            <th class="text-left">Teléfono</th>
+            <th class="text-left"></th>
         </tr>
     </thead>
     <tbody id="table-sub-submenu">
+        @if(!empty($data))
+        @foreach($data as $entry)
+        <tr>
+            <td class="border-b">{{$entry->name}}</td>
+            <td class="border-b">{{$entry->role}}</td>
+            <td class="border-b">{{$entry->email}}</td>
+            <td class="border-b">{{$entry->phone}}</td>
+            <td>
+                <form method="post" action="{{route('contacts.delete')}}">
+                    @csrf
+                    <input type="hidden" name="current_route" value="{{ Route::currentRouteName() }}">
+                    <input type="hidden" name="current_id" value="{{$details->id}}">
+                    <input type="hidden" name="contact_id" value="{{$entry->id}}">
+                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-2 left-0 right-0 ">
+                </form>
+            </td>
+        </tr>
+        @endforeach
+        @endif
+    </tbody>
+</table>
+<script>
+    document.getElementById('openPopupButton_right').addEventListener('click', function() {
+        document.getElementById('form_add_contact').classList.toggle('hidden')
+        document.getElementById('contract_id').value = "{{$details->id}}"
+        document.getElementById('contract_category').value = "{{$category}}"
+    })
+</script>
+
+@endsection
+@case('materials')
+<div id="form_add_existing_material_contract" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        @include('components.form_add_existing_material_contract')
+    </div>
+</div>
+@section('selected-submenu')
+<table id="table-submenu" class="table-auto w-full ">
+    <thead>
+        <tr id="table-submenu-head" class="border-b">
+            <th class="text-left">Nombre</th>
+            <th class="text-left">Cantidad</th>
+            <th class="text-left">Precio/Unidad</th>
+            <th class="text-left"></th>
+        </tr>
+    </thead>
+    <tbody id="table-sub-submenu">
+        @if(!empty($data))
+        @foreach($data as $entry)
+        <tr>
+            <td class="border-b">{{$entry->name}}</td>
+            <td class="border-b">{{$entry->quantity}}</td>
+            <td class="border-b">{{$entry->unit_price}}</td>
+            <td>
+                <form method="post" action="{{route('contracts_materials.delete')}}">
+                    @csrf
+                    <input type="hidden" name="current_route" value="{{ Route::currentRouteName() }}">
+                    <input type="hidden" name="contract_id" value="{{$details->id}}">
+                    <input type="hidden" name="material_id" value="{{$entry->id}}">
+                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-2 left-0 right-0 ">
+                </form>
+            </td>
+        </tr>
+        @endforeach
+        @endif
+    </tbody>
+</table>
+<script>
+    document.getElementById('openPopupButton_right').addEventListener('click', function() {
+        document.getElementById('form_add_existing_material_contract').classList.toggle('hidden')
+        document.getElementById('contract_id').value = "{{$details->id}}"
+        document.getElementById('contract_category').value = "{{$category}}"
+    })
+</script>
+
+
+@endsection
+@case('machinery')
+<div id="form_add_existing_machinery" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        @include('components.form_add_existing_machinery')
+    </div>
+</div>
+@section('selected-submenu')
+<table id="table-submenu" class="table-auto w-full ">
+    <thead>
+        <tr id="table-submenu-head" class="border-b">
+            <th class="text-left">Nombre</th>
+            <th class="text-left">Días</th>
+            <th class="text-left">Precio/Día</th>
+            <th class="text-left"></th>
+        </tr>
+    </thead>
+    <tbody id="table-sub-submenu">
+        @if(!empty($data))
+        @foreach($data as $entry)
+        <tr>
+            <td class="border-b">{{$entry->name}}</td>
+            <td class="border-b">{{$entry->days}}</td>
+            <td class="border-b">{{$entry->day_price}}</td>
+            <td>
+                <form method="post" action="{{route('contracts_machinery.delete')}}">
+                    @csrf
+                    <input type="hidden" name="current_route" value="{{ Route::currentRouteName() }}">
+                    <input type="hidden" name="contract_id" value="{{$details->id}}">
+                    <input type="hidden" name="machinery_id" value="{{$entry->id}}">
+                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-2 left-0 right-0 ">
+                </form>
+            </td>
+        </tr>
+        @endforeach
+        @endif
+    </tbody>
+</table>
+<script>
+    document.getElementById('openPopupButton_right').addEventListener('click', function() {
+        document.getElementById('form_add_existing_machinery').classList.toggle('hidden')
+        document.getElementById('contract_id').value = "{{$details->id}}"
+        document.getElementById('contract_category').value = "{{$category}}"
+    })
+</script>
+
+
+@endsection
+@case('records')
+<div id="form_add_record" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        @include('components.form_add_record')
+    </div>
+</div>
+<div id="form_edit_record" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        @include('components.form_edit_record')
+    </div>
+</div>
+@section('selected-submenu')
+<table id="table-submenu" class="table-auto w-full ">
+    <thead>
+        <tr id="table-submenu-head" class="border-b">
+            <th class="text-left">Código</th>
+            <th class="text-left">Fecha</th>
+            <th class="text-left"></th>
+            <th class="text-left"></th>
+        </tr>
+    </thead>
+    <tbody id="table-sub-submenu">
+        @if(!empty($data))
+        @foreach($data as $entry)
+        <tr>
+            <td class="border-b">{{$entry->id}}</td>
+            <td class="border-b">{{$entry->date}}</td>
+            <td>
+                <form method="post" action="{{route('records.delete')}}">
+                    @csrf
+                    <input type="hidden" name="current_route" value="{{ Route::currentRouteName() }}">
+                    <input type="hidden" name="current_id" value="{{$details->id}}">
+                    <input type="hidden" name="record_id" value="{{$entry->id}}">
+                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-2 left-0 right-0 ">
+                </form>
+            </td>
+            <td><img src="{{asset('img/editar.png')}}" class="cursor-pointer h-2" /></td>
+        </tr>
+        @endforeach
+        @endif
     </tbody>
 </table>
 
-<div class="fixed bottom-12 right-8">
-    <button id="openPopupButton_right" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>
-</div>
+<script>
+    document.getElementById('openPopupButton_right').addEventListener('click', function() {
+        document.getElementById('form_add_record').classList.toggle('hidden')
+        document.getElementById('contract_id').value = "{{$details->id}}"
+        document.getElementById('contract_category').value = "{{$category}}"
+    })
+</script>
+
 
 @endsection
+@endswitch
+
+@endif
+@endsection
+@endif

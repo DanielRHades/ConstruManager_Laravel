@@ -32,21 +32,18 @@ class MaterialsController extends Controller
     {
         $suppliers = Supplier::all();
         $material = Material::select('id', 'name')->get();
-        return view('materials', ['materials' => $material])->with('suppliers', $suppliers);
+        return view('materials', ['materials' => $material])->with('allSuppliers', $suppliers);
     }
 
-    public function getItemRelationInfo($itemId)
+
+    public function getItemDetails($itemId)
     {
+        $details = Material::where('id', $itemId)->select('id', 'name', 'quantity', 'unit_price')->first();
         $data =  Supplier::select('supplier.*')
             ->join('supplier_material', 'supplier.id', '=', 'supplier_material.supplier_id')
             ->where('supplier_material.material_id', '=', $itemId)
             ->get();
-        return response()->json($data);
-    }
-    public function getItemDetails($itemId)
-    {
-        $details = Material::where('id', $itemId)->select('name', 'quantity', 'unit_price')->get();
-        return response()->json($details);
+        return $this->getItems()->with('details', $details)->with('suppliers', $data);
     }
     public function updateItemDetails($itemId, Request $request)
     {
@@ -63,11 +60,10 @@ class MaterialsController extends Controller
         $material->unit_price = $validatedData['precio'];
 
         $material->save();
-        return response(0);
+        return $this->getItemDetails($itemId);
     }
-    public function deleteItem(Request $request)
+    public function deleteItem($itemId)
     {
-        $itemId = $request->input('elementId');
         Material::find($itemId)->delete();
         return redirect()->route('materiales')->with('success', 'Material eliminado exitosamente.');
     }

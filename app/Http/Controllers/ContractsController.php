@@ -34,7 +34,7 @@ class ContractsController extends Controller
         $contracts = Contract::select('contract.id', 'contract.date', 'customer.name')
             ->leftJoin('customer', 'customer.contract_id', '=', 'contract.id')
             ->get();
-        return view('contracts', ['contracts' => $contracts])->with('materials', $materials)->with('machineries', $machineries);
+        return view('contracts', ['contracts' => $contracts])->with('allMaterials', $materials)->with('allMachineries', $machineries);
     }
 
     public function getItemRelationInfo($itemId, $category)
@@ -42,25 +42,25 @@ class ContractsController extends Controller
         $data = null;
         switch ($category) {
             case 'contacts':
-                $data = Contact::select('name', 'role', 'email', 'phone')->where('contract_id', $itemId)->get();
+                $data = Contact::select('id', 'name', 'role', 'email', 'phone')->where('contract_id', $itemId)->get();
                 break;
             case 'materials':
-                $data = Material::select('material.name', 'contract_material.quantity', 'material.unit_price')
+                $data = Material::select('material.id', 'material.name', 'contract_material.quantity', 'material.unit_price')
                     ->join('contract_material', 'material.id', '=', 'contract_material.material_id')
                     ->where('contract_material.contract_id', $itemId)
                     ->get();
                 break;
             case 'machinery':
-                $data = Machinery::join('contract_machinery', 'machinery.id', '=', 'contract_machinery.machinery_id')
+                $data = Machinery::select('id', 'machinery.name', 'contract_machinery.days', 'machinery.day_price')
+                    ->join('contract_machinery', 'machinery.id', '=', 'contract_machinery.machinery_id')
                     ->where('contract_machinery.contract_id', $itemId)
-                    ->select('machinery.name', 'contract_machinery.days', 'machinery.day_price')
                     ->get();
                 break;
             case 'records':
                 $data = Record::select('id', 'date')->where('contract_id', $itemId)->get();
                 break;
         }
-        return response()->json($data);
+        return $this->getItemDetails($itemId)->with('data', $data)->with('category', $category);
     }
     public function getItemDetails($itemId)
     {
@@ -68,10 +68,10 @@ class ContractsController extends Controller
             Contract::select('contract.id', 'contract.date', 'contract.description', 'customer.name', 'customer.email', 'customer.type', 'customer.phone')
             ->leftJoin('customer', 'customer.contract_id', '=', 'contract.id')
             ->where('contract.id', $itemId)
-            ->get();
+            ->first();
 
 
-        return response()->json($details);
+        return $this->getItems()->with('details', $details);
     }
     public function updateItemDetails($itemId, Request $request)
     {
@@ -86,11 +86,10 @@ class ContractsController extends Controller
         $contract->date = $validatedData['fecha'];
 
         $contract->save();
-        return response(0);
+        return $this->getItemDetails($itemId);
     }
-    public function deleteItem(Request $request)
+    public function deleteItem($itemId)
     {
-        $itemId = $request->input('elementId');
         Contract::find($itemId)->delete();
         return redirect()->route('contratos')->with('success', 'Contrato eliminado exitosamente.');
     }

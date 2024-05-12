@@ -24,34 +24,22 @@
             @yield('side-menu-items')
         </div>
         <main class="absolute w-3/4 right-0 p-5 border h-full">
-            <div id="selected-main" class="hidden max-h-1/3 overflow-y w-full mb-5">
-                <div class="relative">
-                    <div class="absolute right-0 top-0 flex">
-                        <img id="edit-item" src="{{asset('img/editar.png')}}" class="h-6 me-4 cursor-pointer" href="">
-                        <img id="delete-item" src="{{asset('img/borrar.png')}}" class="h-6 cursor-pointer" href="">
-                    </div>
-                </div>
+            <div id="selected-main" class="max-h-1/3 overflow-y w-full mb-5">
                 @yield('selected-main')
             </div>
             <div id="submenu" class="max-h-2/3 overflow-y w-full">
-                <div id="buttons-submenu" class="hidden border-b flex">
+                <div id="buttons-submenu" class="empty:hidden border-b flex">
                     @yield('buttons-submenu')
                 </div>
-                <div id="selected-submenu" class="hidden mt-2 border-b border-x">
+                <div id="selected-submenu" class="mt-2 border-b border-x">
                     @yield('selected-submenu')
                 </div>
             </div>
         </main>
     </div>
-    <div id="form_delete" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-        <div class="bg-white p-8 rounded-lg shadow-md w-96">
-            @include('components.form_delete')
-        </div>
-    </div>
     <script>
         document.getElementById('delete-item').addEventListener('click', function() {
             document.getElementById('form_delete').classList.remove('hidden')
-            document.getElementById('elementId').value = currentItemId
         })
     </script>
 </body>

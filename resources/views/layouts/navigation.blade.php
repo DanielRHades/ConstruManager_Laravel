@@ -6,24 +6,26 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a>
-                        <x-application-logo-dashboard/>
+                        <x-application-logo-dashboard />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('contratos')" :active="request()->routeIs('contratos')">
+
+                    <x-nav-link :href="route('contratos')" :active="request()->route()->named(['contratos', 'contracts.*'])">
                         {{ __('Contratos') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('proveedores')" :active="request()->routeIs('proveedores')">
+                    <x-nav-link :href="route('proveedores')" :active="request()->route()->named(['proveedores', 'suppliers.*'])">
                         {{ __('Proveedores') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('materiales')" :active="request()->routeIs('materiales')">
+                    <x-nav-link :href="route('materiales')" :active="request()->route()->named(['materiales', 'materials.*'])">
                         {{ __('Materiales') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('maquinarias')" :active="request()->routeIs('maquinarias')">
+                    <x-nav-link :href="route('maquinarias')" :active="request()->route()->named(['maquinarias', 'machinery.*'])">
                         {{ __('Maquinarias') }}
                     </x-nav-link>
+
                 </div>
             </div>
 

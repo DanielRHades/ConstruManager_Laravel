@@ -7,7 +7,7 @@
             <div class="mb-4">
                 <label class="block text-sm font-semibold mb-2" for="nombre">Nombre</label>
                 <select id="scroll_menu_contract_material" name="nombre" class="w-full border-gray-300 rounded-md p-2">
-                    @foreach($materials as $material)
+                    @foreach($allMaterials as $material)
                     <option value="{{ $material->id }}">{{ $material->name }}</option>
                     @endforeach
                 </select>
@@ -17,7 +17,9 @@
                 <input type="number" id="cantidad" name="cantidad" class="w-full border-gray-300 rounded-md p-2">
             </div>
             <div class="flex justify-end">
-                <input type="hidden" name="contract_id_material" id="contract_id_material" value="">
+                <input type="hidden" name="current_route" value="{{ Route::currentRouteName() }}">
+                <input type="hidden" name="contract_id_material" id="contract_id" value="">
+                <input type="hidden" name="contract_category_material" id="contract_category" value="">
                 <input type="hidden" name="material_id" id="material_id" value="">
                 <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2">Agregar</button>
                 <button type="button" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" onclick="closeAddMaterialContract()">Cancelar</button>

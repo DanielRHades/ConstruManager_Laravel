@@ -11,6 +11,7 @@ class Suppliers_MaterialsController extends Controller
     {
 
         $validatedData = $request->validate([
+            'current_id' => 'required|integer|min:0',
             'supplier_id' => 'required|exists:supplier,id',
             'material_id' => 'required|exists:material,id',
         ]);
@@ -21,13 +22,18 @@ class Suppliers_MaterialsController extends Controller
 
         $supplier_material->save();
 
-        return redirect()->route($request->current_route)->with('success', 'Material agregado exitosamente.');
+        return redirect()->route($request->current_route, ['id' => $validatedData['current_id']])->with('success', 'Material agregado exitosamente.');
     }
-    public function deleteRelation($supplierId, $materialId)
+    public function deleteRelation(Request $request)
     {
-        Supplier_Material::where('material_id', $materialId)
-            ->where('supplier_id', $supplierId)
+        $validatedData = $request->validate([
+            'supplier_id' => 'required|exists:supplier,id',
+            'material_id' => 'required|exists:material,id',
+        ]);
+
+        Supplier_Material::where('material_id', $validatedData['material_id'])
+            ->where('supplier_id', $validatedData['supplier_id'])
             ->delete();
-        return response(0);
+        return redirect()->route($request->current_route, ['id' => $request->current_id]);
     }
 }

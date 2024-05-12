@@ -24,7 +24,10 @@ class RecordsController extends Controller
 
         $record->save();
 
-        return redirect()->route('contratos')->with('success', 'Contrato agregado exitosamente.');
+        return redirect()->route($request->current_route, [
+            'id' => $validatedData['contract_id_record'],
+            'category' => $request->contract_category_record
+        ])->with('success', 'Material agregado exitosamente.');
     }
     public function getItemDetails($itemId)
     {
@@ -47,5 +50,12 @@ class RecordsController extends Controller
         $record->save();
 
         return response(0);
+    }
+    public function deleteItem(Request $request)
+    {
+        Record::where('id', $request->record_id)
+            ->delete();
+
+        return redirect()->route($request->current_route, ['id' => $request->current_id, 'category' => 'records']);
     }
 }

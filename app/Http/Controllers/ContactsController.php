@@ -27,6 +27,17 @@ class ContactsController extends Controller
 
         $contact->save();
 
-        return redirect()->route('contratos')->with('success', 'Customer agregado exitosamente.');
+        return redirect()->route($request->current_route, [
+            'id' => $request->contract_id_contact,
+            'category' => $request->contract_category_contact
+        ])->with('success', 'Customer agregado exitosamente.');
+    }
+    public function deleteItem(Request $request)
+    {
+        Contact::where('id', $request->contact_id)
+            ->where('contract_id', $request->current_id)
+            ->delete();
+
+        return redirect()->route($request->current_route, ['id' => $request->current_id, 'category' => 'contacts']);
     }
 }

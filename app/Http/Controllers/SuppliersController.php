@@ -29,26 +29,18 @@ class SuppliersController extends Controller
     {
         $materials = Material::all();
         $suppliers = Supplier::select('id', 'name', 'email')->get();
-        return view('suppliers', ['suppliers' => $suppliers])->with('materials', $materials);
+        return view('suppliers', ['suppliers' => $suppliers])->with('allMaterials', $materials);
     }
 
-    public function getItemRelationInfo($itemId, $category)
-    {
-        $data = null;
-        switch ($category) {
-            case 'materials':
-                $data = Material::select('material.name', 'material.unit_price')
-                    ->join('supplier_material', 'material.id', '=', 'supplier_material.material_id')
-                    ->where('supplier_material.supplier_id', '=', $itemId)
-                    ->get();
-                break;
-        }
-        return response()->json($data);
-    }
     public function getItemDetails($itemId)
     {
-        $details = Supplier::where('id', $itemId)->select('name', 'email', 'phone')->get();
-        return response()->json($details);
+        $materials = Material::select('material.id', 'material.name', 'material.unit_price')
+            ->join('supplier_material', 'material.id', '=', 'supplier_material.material_id')
+            ->where('supplier_material.supplier_id', '=', $itemId)
+            ->get();
+        $details = Supplier::where('id', $itemId)->select('id', 'name', 'email', 'phone')->first();
+
+        return $this->getItems()->with('details', $details)->with('materials', $materials);
     }
     public function updateItemDetails($itemId, Request $request)
     {
@@ -64,11 +56,10 @@ class SuppliersController extends Controller
         $supplier->phone = $validatedData['telefono'];
 
         $supplier->save();
-        return response(0);
+        return $this->getItemDetails($itemId);
     }
-    public function deleteItem(Request $request)
+    public function deleteItem($itemId)
     {
-        $itemId = $request->input('elementId');
         Supplier::find($itemId)->delete();
         return redirect()->route('proveedores')->with('success', 'Proveedor eliminado exitosamente.');
     }
