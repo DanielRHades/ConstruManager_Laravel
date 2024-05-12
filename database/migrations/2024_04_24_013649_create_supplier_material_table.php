@@ -19,8 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger('supplier_id');
             $table->unsignedBigInteger('material_id');
 
-            $table->foreign('supplier_id')->references('id')->on('supplier');
-            $table->foreign('material_id')->references('id')->on('material');
+            $table->foreign('supplier_id')->references('id')->on('supplier')->onDelete('cascade');
+            $table->foreign('material_id')->references('id')->on('material')->onDelete('cascade');
 
             $table->primary(['supplier_id', 'material_id']);
         });

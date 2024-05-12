@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('material_id');
             $table->unsignedInteger('quantity');
 
-            $table->foreign('contract_id')->references('id')->on('contract');
-            $table->foreign('material_id')->references('id')->on('material');
+            $table->foreign('contract_id')->references('id')->on('contract')->onDelete('cascade');
+            $table->foreign('material_id')->references('id')->on('material')->onDelete('cascade');
 
             $table->primary(['contract_id', 'material_id']);
         });

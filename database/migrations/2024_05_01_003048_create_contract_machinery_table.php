@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('machinery_id');
             $table->unsignedInteger('days');
 
-            $table->foreign('contract_id')->references('id')->on('contract');
-            $table->foreign('machinery_id')->references('id')->on('machinery');
+            $table->foreign('contract_id')->references('id')->on('contract')->onDelete('cascade');
+            $table->foreign('machinery_id')->references('id')->on('machinery')->onDelete('cascade');
 
             $table->primary(['contract_id', 'machinery_id']);
         });

@@ -20,30 +20,28 @@
     @include('layouts.navigation')
     <!-- Page Content -->
     <div class="flex-1 relative bg-gray-100">
-        <div id="side-menu" class="absolute w-1/4 left-0 p-5 border h-full overflow-y">
+        <div id="side-menu" class="absolute w-1/4 left-0 p-5 border h-full overflow-y-auto">
             @yield('side-menu-items')
         </div>
         <main class="absolute w-3/4 right-0 p-5 border h-full">
-            <div id="selected-main" class="hidden max-h-1/3 overflow-y w-full mb-5">
-                <div class="relative">
-                    <div class="absolute right-0 top-0 flex">
-                        <img id="edit-item" src="{{asset('img/editar.png')}}" class="h-6 me-4" href="">
-                        <img id="delete-item" src="{{asset('img/borrar.png')}}" class="h-6" href="">
-                    </div>
-                </div>
+            <div id="selected-main" class="max-h-1/3 overflow-y-auto w-full mb-5">
                 @yield('selected-main')
             </div>
-            <div id="submenu" class="max-h-2/3 overflow-y w-full">
-                <div id="buttons-submenu" class="hidden border-b flex">
+            <div id="submenu" class="max-h-2/3 overflow-y-auto w-full">
+                <div id="buttons-submenu" class="empty:hidden border-b flex">
                     @yield('buttons-submenu')
                 </div>
-                <div id="selected-submenu" class="hidden mt-2 border-b border-x">
+                <div id="selected-submenu" class="mt-2 border-b border-x">
                     @yield('selected-submenu')
                 </div>
             </div>
         </main>
     </div>
-    </div>
+    <script>
+        document.getElementById('delete-item').addEventListener('click', function() {
+            document.getElementById('form_delete').classList.remove('hidden')
+        })
+    </script>
 </body>
 
 </html>

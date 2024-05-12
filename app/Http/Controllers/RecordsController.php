@@ -24,6 +24,38 @@ class RecordsController extends Controller
 
         $record->save();
 
-        return redirect()->route('contratos')->with('success', 'Contrato agregado exitosamente.');
+        return redirect()->route($request->current_route, [
+            'id' => $validatedData['contract_id_record'],
+            'category' => $request->contract_category_record
+        ])->with('success', 'Material agregado exitosamente.');
+    }
+    public function getItemDetails($itemId)
+    {
+        $description = Record::select('description', 'date')->where('id', $itemId)->first();
+        return response()->json($description);
+    }
+    public function updateItemDetails(Request $request)
+    {
+        $validatedData = $request->validate([
+            'fecha' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:255',
+
+        ]);
+
+
+        $record = Record::find($request->record_id);
+        $record->date = $validatedData['fecha'];
+        $record->description = $validatedData['descripcion'];
+
+        $record->save();
+
+        return redirect()->route($request->current_route, ['id' => $request->contract_id, 'category' => 'records']);
+    }
+    public function deleteItem(Request $request)
+    {
+        Record::where('id', $request->record_id)
+            ->delete();
+
+        return redirect()->route($request->current_route, ['id' => $request->current_id, 'category' => 'records']);
     }
 }

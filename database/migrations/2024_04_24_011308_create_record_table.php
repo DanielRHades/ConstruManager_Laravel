@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('description');
             $table->unsignedBigInteger('contract_id');
 
-            $table->foreign('contract_id')->references('id')->on('contract');
+            $table->foreign('contract_id')->references('id')->on('contract')->onDelete('cascade');
         });
     }
 
