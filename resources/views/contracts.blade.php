@@ -242,12 +242,18 @@
         @include('components.form_edit_record')
     </div>
 </div>
+<div id="record-details" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        @include('components.record_details_popup')
+    </div>
+</div>
 @section('selected-submenu')
 <table id="table-submenu" class="table-auto w-full ">
     <thead>
         <tr id="table-submenu-head" class="border-b">
             <th class="text-left">Código</th>
             <th class="text-left">Fecha</th>
+            <th class="text-left"></th>
             <th class="text-left"></th>
             <th class="text-left"></th>
         </tr>
@@ -268,6 +274,7 @@
                 </form>
             </td>
             <td><img id="record-button-{{$entry->id}}" src="{{asset('img/editar.png')}}" class="cursor-pointer h-2" /></td>
+            <td><img id="record-button-details-{{$entry->id}}" src="{{asset('img/mas.png')}}" class="cursor-pointer h-2" /></td>
             <script>
                 document.getElementById('record-button-{{$entry->id}}').addEventListener('click', function() {
                     document.getElementById('form_edit_record').classList.toggle('hidden')
@@ -280,6 +287,16 @@
                             document.getElementById('record-date-edit').value = data.date
                         })
                         .catch(err => console.log(err))
+                })
+                document.getElementById('record-button-details-{{$entry->id}}').addEventListener('click', function() {
+                    fetch('/records/{{$entry->id}}')
+                        .then(response => response.json())
+                        .then(data => {
+                            document.getElementById('record-details-date').innerText = data.date.split('-').join('/')
+                            document.getElementById('record-details-description').innerText = data.description
+
+                        })
+                        .then(document.getElementById('record-details').classList.toggle('hidden'))
                 })
             </script>
         </tr>
