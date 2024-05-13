@@ -15,7 +15,7 @@
             <div class="flex justify-end">
                 <input type="hidden" name="current_route" value="{{ Route::currentRouteName() }}">
                 <input type="hidden" name="record_id" id="record_id">
-                <input type="hidden" name="contract_id" id="contract_id">
+                <input type="hidden" name="contract_id" id="record_contract_id">
                 <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2">Actualizar</button>
                 <button type="button" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" onclick="closeEditRecord()">Cancelar</button>
             </div>

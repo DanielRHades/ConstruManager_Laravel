@@ -270,7 +270,7 @@
                 document.getElementById('record-button-{{$entry->id}}').addEventListener('click', function() {
                     document.getElementById('form_edit_record').classList.toggle('hidden')
                     document.getElementById('record_id').value = "{{$entry->id}}"
-                    document.getElementById('contract_id').value = "{{$details->id}}"
+                    document.getElementById('record_contract_id').value = "{{$details->id}}"
                     fetch('/records/{{$entry->id}}')
                         .then(response => response.json())
                         .then(data => {
