@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Supplier_Material;
+use Illuminate\Database\QueryException;
 
 class Suppliers_MaterialsController extends Controller
 {
@@ -20,7 +21,15 @@ class Suppliers_MaterialsController extends Controller
         $supplier_material->supplier_id = $validatedData['supplier_id'];
         $supplier_material->material_id = $validatedData['material_id'];
 
-        $supplier_material->save();
+        try {
+            $supplier_material->save();
+        } catch (QueryException $e) {
+            if ($e->errorInfo[1] == 1062) { 
+                return redirect()->back()->withInput()->with('error', 'El material ya ha sido agregado anteriormente.');
+            } else {
+                return redirect()->back()->withInput()->with('error', 'Hubo un error al agregar el material.');
+            }
+        }
 
         return redirect()->route($request->current_route, ['id' => $validatedData['current_id']])->with('success', 'Material agregado exitosamente.');
     }

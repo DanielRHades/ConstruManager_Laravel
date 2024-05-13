@@ -13,7 +13,7 @@ use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\Contracts_MaterialsController;
 use App\Http\Controllers\Contracts_MachineryController;
 use App\Http\Controllers\RecordsController;
-use App\Models\Contract_Machinery;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +25,9 @@ use App\Models\Contract_Machinery;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+//Poner auth.login una vez se cambie en las rutas de auth.php el register dentro del "admin" Middleware
+//Tambien tener minimo un usuario Administrador creado dentro de la base de datos.
 
 Route::get('/', function () {
     return view('auth.register');
@@ -64,25 +67,25 @@ Route::post('/contracts_materials/delete/', [Contracts_MaterialsController::clas
 Route::post('/contracts_machinery/delete/', [Contracts_MachineryController::class, 'deleteItem'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('contracts_machinery.delete');
 
 
-Route::post('/suppliers', [SuppliersController::class, 'store'])->name('suppliers.store');
+Route::post('/suppliers', [SuppliersController::class, 'store'])->middleware(['auth', 'verified'])->name('suppliers.store');
 
-Route::post('/materials', [MaterialsController::class, 'store'])->name('materials.store');
+Route::post('/materials', [MaterialsController::class, 'store'])->middleware(['auth', 'verified'])->name('materials.store');
 
-Route::post('/contracts', [ContractsController::class, 'store'])->name('contracts.store');
+Route::post('/contracts', [ContractsController::class, 'store'])->middleware(['auth', 'verified'])->name('contracts.store');
 
-Route::post('/contracts/customers', [CustomersController::class, 'store'])->name('customers.store');
+Route::post('/contracts/customers', [CustomersController::class, 'store'])->middleware(['auth', 'verified'])->name('customers.store');
 
-Route::post('/contracts/contacts', [ContactsController::class, 'store'])->name('contacts.store');
+Route::post('/contracts/contacts', [ContactsController::class, 'store'])->middleware(['auth', 'verified'])->name('contacts.store');
 
-Route::post('/contracts/materials', [Contracts_MaterialsController::class, 'store'])->name('contracts_materials.store');
+Route::post('/contracts/materials', [Contracts_MaterialsController::class, 'store'])->middleware(['auth', 'verified'])->name('contracts_materials.store');
 
-Route::post('/contracts/machinery', [Contracts_MachineryController::class, 'store'])->name('contracts_machinery.store');
+Route::post('/contracts/machinery', [Contracts_MachineryController::class, 'store'])->middleware(['auth', 'verified'])->name('contracts_machinery.store');
 
-Route::post('/contracts/records', [RecordsController::class, 'store'])->name('records.store');
+Route::post('/contracts/records', [RecordsController::class, 'store'])->middleware(['auth', 'verified'])->name('records.store');
 
-Route::post('/machinery', [MachineryController::class, 'store'])->name('machinery.store');
+Route::post('/machinery', [MachineryController::class, 'store'])->middleware(['auth', 'verified'])->name('machinery.store');
 
-Route::post('/suppliers/suppliers_materials', [Suppliers_MaterialsController::class, 'store'])->name('suppliers_materials.store');
+Route::post('/suppliers/suppliers_materials', [Suppliers_MaterialsController::class, 'store'])->middleware(['auth', 'verified'])->name('suppliers_materials.store');
 
 //
 
