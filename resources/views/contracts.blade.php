@@ -193,6 +193,7 @@
     <thead>
         <tr id="table-submenu-head" class="border-b">
             <th class="text-left">Nombre</th>
+            <th class="text-left">Cantidad</th>
             <th class="text-left">Días</th>
             <th class="text-left">Precio/Día</th>
             <th class="text-left"></th>
@@ -203,6 +204,7 @@
         @foreach($data as $entry)
         <tr>
             <td class="border-b">{{$entry->name}}</td>
+            <td class="border-b">{{$entry->quantity}}</td>
             <td class="border-b">{{$entry->days}}</td>
             <td class="border-b">{{$entry->day_price}}</td>
             <td>

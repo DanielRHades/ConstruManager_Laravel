@@ -51,7 +51,7 @@ class ContractsController extends Controller
                     ->get();
                 break;
             case 'machinery':
-                $data = Machinery::select('id', 'machinery.name', 'contract_machinery.days', 'machinery.day_price')
+                $data = Machinery::select('id', 'machinery.name', 'contract_machinery.quantity', 'contract_machinery.days', 'machinery.day_price')
                     ->join('contract_machinery', 'machinery.id', '=', 'contract_machinery.machinery_id')
                     ->where('contract_machinery.contract_id', $itemId)
                     ->get();

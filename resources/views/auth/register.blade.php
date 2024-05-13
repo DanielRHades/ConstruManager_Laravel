@@ -11,7 +11,7 @@
 
             <!-- Type -->
             <div class="mt-4">
-                <label class="block text-sm font-semibold mb-2" for="type">Tipo de Usuario</label>
+                <x-input-label for="type" :value="__('Tipo de Usuario')"/>
                 <select id="type" name="type" class="w-full border-gray-300 rounded-md p-2">
                     <option value="usuario">Usuario</option>
                     <option value="administrador">Administrador</option>

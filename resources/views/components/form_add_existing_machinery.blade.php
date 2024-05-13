@@ -13,6 +13,10 @@
                 </select>
             </div>
             <div class="mb-4">
+                <label class="block text-sm font-semibold mb-2" for="dias">Cantidad</label>
+                <input type="number" id="cantidad" name="cantidad" class="w-full border-gray-300 rounded-md p-2">
+            </div>
+            <div class="mb-4">
                 <label class="block text-sm font-semibold mb-2" for="dias">Días</label>
                 <input type="number" id="dias" name="dias" class="w-full border-gray-300 rounded-md p-2">
             </div>

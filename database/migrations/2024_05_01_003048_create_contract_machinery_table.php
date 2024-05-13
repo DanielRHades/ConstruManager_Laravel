@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('contract_machinery', function (Blueprint $table) {
             $table->unsignedBigInteger('contract_id');
             $table->unsignedBigInteger('machinery_id');
+            $table->unsignedBigInteger('quantity');
             $table->unsignedInteger('days');
 
             $table->foreign('contract_id')->references('id')->on('contract')->onDelete('cascade');
