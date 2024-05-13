@@ -30,7 +30,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 //Tambien tener minimo un usuario Administrador creado dentro de la base de datos.
 
 Route::get('/', function () {
-    return view('auth.register');
+    return view('auth.login');
 });
 
 
