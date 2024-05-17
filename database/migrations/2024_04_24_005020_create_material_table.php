@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedBigInteger('quantity');
-            $table->unsignedFloat('unit_price');
+            $table->unsignedBigInteger('unit_price');
         });
     }
 
