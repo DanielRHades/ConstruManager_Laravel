@@ -13,6 +13,7 @@ use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\Contracts_MaterialsController;
 use App\Http\Controllers\Contracts_MachineryController;
 use App\Http\Controllers\RecordsController;
+use App\Http\Controllers\UsersController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 
 /*
@@ -66,6 +67,10 @@ Route::post('/contacts/delete/', [ContactsController::class, 'deleteItem'])->whe
 Route::post('/contracts_materials/delete/', [Contracts_MaterialsController::class, 'deleteItem'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('contracts_materials.delete');
 Route::post('/contracts_machinery/delete/', [Contracts_MachineryController::class, 'deleteItem'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('contracts_machinery.delete');
 
+Route::get('/users', [UsersController::class, 'getItems'])->middleware(['auth', 'verified'])->name('usuarios');
+Route::get('/users/{id}', [UsersController::class, 'getItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('users.details');
+Route::post('/users/edit/{id}', [UsersController::class, 'updateItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('users.edit');
+Route::get('/users/delete/{id}', [UsersController::class, 'deleteItem'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('users.delete');
 
 Route::post('/suppliers', [SuppliersController::class, 'store'])->middleware(['auth', 'verified'])->name('suppliers.store');
 
