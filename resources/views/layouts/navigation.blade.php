@@ -49,6 +49,9 @@
                         <x-dropdown-link :href="route('register')">
                             {{ __('Registrar usuario') }}
                         </x-dropdown-link>
+                        <x-dropdown-link :href="route('profile.edit')">
+                            {{ __('Editar usuario') }}
+                        </x-dropdown-link>
                         @endif
                   
                         <!-- Authentication -->
