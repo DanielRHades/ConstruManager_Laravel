@@ -25,9 +25,9 @@ class Suppliers_MaterialsController extends Controller
             $supplier_material->save();
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1062) { 
-                return redirect()->back()->withInput()->with('error', 'El material ya ha sido agregado anteriormente.');
+                return redirect()->back()->withInput()->with('error', 'El item ya ha sido agregado anteriormente.');
             } else {
-                return redirect()->back()->withInput()->with('error', 'Hubo un error al agregar el material.');
+                return redirect()->back()->withInput()->with('error', 'Hubo un error al agregar el item.');
             }
         }
 

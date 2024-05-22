@@ -14,10 +14,31 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        .alert {
+            position: fixed; /* Fija la posición del mensaje */
+            top: 20px; /* Distancia desde la parte superior */
+            left: 50%; /* Centra horizontalmente */
+            transform: translateX(-50%); /* Centra horizontalmente */
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+            opacity: 1;
+            transition: opacity 0.6s;
+            z-index: 1000; /* Asegura que esté encima de otros elementos */
+        }
+        .alert.success {background-color: #4CAF50;}
+        .alert.info {background-color: #2196F3;}
+        .alert.warning {background-color: #ff9800;}
+    </style>
 </head>
 
 <body class="font-sans antialiased flex flex-col h-screen">
     @include('layouts.navigation')
+    @if (session('error'))
+    <div class="alert" id="error-message">{{ session('error') }}</div>
+    @endif
     <!-- Page Content -->
     <div class="flex-1 relative bg-gray-100">
         <div id="side-menu" class="absolute w-1/4 left-0 p-5 border h-full overflow-y-auto">
@@ -37,11 +58,24 @@
             </div>
         </main>
     </div>
+    <div class="container">
+        @yield('content')
+    </div>
     <script>
         document.getElementById('delete-item').addEventListener('click', function() {
             document.getElementById('form_delete').classList.remove('hidden')
         })
     </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const errorMessage = document.getElementById('error-message');
+        if (errorMessage) {
+            setTimeout(() => {
+                errorMessage.style.opacity = '0';
+                setTimeout(() => { errorMessage.style.display = 'none'; }, 600);
+        }, 3000);
+        }
+    });
+</script>
 </body>
-
 </html>

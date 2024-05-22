@@ -31,7 +31,7 @@ class Contracts_MaterialsController extends Controller
             $material->save();
         } catch (PDOException $e) {
             if ($e->errorInfo[1] == 1264) {
-                return redirect()->back()->withInput()->with('error', 'El valor ingresado está fuera de rango para la cantidad.');
+                return redirect()->back()->withInput()->with('error', 'El valor ingresado está fuera de la cantidad disponible.');
             } else {
                 return redirect()->back()->withInput()->with('error', 'Hubo un error al agregar el material.');
             }

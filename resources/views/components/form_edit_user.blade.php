@@ -1,7 +1,6 @@
 <div id="form_edit_user" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
     <div class="bg-white p-8 rounded-lg shadow-md w-96">
-        <h2 class="text-lg font-bold mb-4">Editar Maquinaria</h2>
-
+        <h2 class="text-lg font-bold mb-4">Editar Usuario</h2>
         <form id="user_form" method="POST" action="{{route('users.edit',['id'=>$id])}}">
             @csrf
             <div class="mb-4">
@@ -18,14 +17,14 @@
             <div class="mb-4">
                 <label class="block text-sm font-semibold mb-2" for="email">Email</label>
                 <input type="email" id="email-edit" name="email" class="w-full border-gray-300 rounded-md p-2">
-            </div>          
+            </div> 
             <div class="mb-4">
                 <label class="block text-sm font-semibold mb-2"  for="password_edit">Contraseña</label>
-                <input type="password" id="password-edit"  name="password_edit" required autocomplete="new-password" class="w-full border-gray-300 rounded-md p-2">
+                <input type="password" id="password_edit" name="password_edit" autocomplete="new-password" class="w-full border-gray-300 rounded-md p-2">
             </div>
             <div class="mb-4">
                 <label class="block text-sm font-semibold mb-2"  for="password_confirmation_edit">Confirmación Contraseña</label>
-                <input type="password" id="password_confirmation_edit"  name="password_confirmation_edit" required autocomplete="new-password" class="w-full border-gray-300 rounded-md p-2">
+                <input type="password" id="password_confirmation_edit" name="password_confirmation_edit" autocomplete="new-password" class="w-full border-gray-300 rounded-md p-2">
             </div>
             <div class="flex justify-end">
                 <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2">Actualizar</button>

@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Str;
-use Illuminate\Auth\Events\PasswordReset;
+
 class UsersController extends Controller
 {
     public function getItems()
@@ -23,32 +20,32 @@ class UsersController extends Controller
     }
     public function updateItemDetails($itemId, Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'nombre' => ['required', 'string', 'max:255'],
             'tipo' => ['required', 'string', 'in:usuario,administrador'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password_edit' => ['required', 'confirmed', Rules\Password::defaults()],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password_edit' => ['nullable'],
         ]);
 
+        $user = User::findOrFail($itemId);
 
-        User::where('id', $itemId)->update([
-            'name' => $request->nombre,
-            'type' => $request->tipo,
-            'email' => $request->email,
-            
-        ]);
+        $user->name = $validatedData['nombre'];
+        $user->type = $validatedData['tipo'];
+        $user->email = $validatedData['email'];
+        if (!empty($validatedData['password_edit'])) {
+            $user->password = Hash::make($validatedData['password_edit']);
+        }
 
-        Password::reset(
-            $request->only('email', 'password_edit', 'password_confirmation_edit', 'token'),
-            function ($user) use ($request) {
-                $user->forceFill([
-                    'password' => Hash::make($request->password_edit),
-                    'remember_token' => Str::random(60),
-                ])->save();
-
-                event(new PasswordReset($user));
+        try {
+            $user->save();
+        } catch (\Illuminate\Database\QueryException $e) {
+            $errorCode = $e->errorInfo[1];
+            if ($errorCode == 1062) {
+                return redirect()->back()->withInput()->with('error', 'El email ingresado ya está registrado.');
+            } else {
+                return redirect()->back()->withInput()->with('error', 'Hubo un error al actualizar el usuario.');
             }
-        );
+        }
 
         return $this->getItemDetails($itemId);
     }

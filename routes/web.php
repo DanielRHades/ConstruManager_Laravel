@@ -67,10 +67,7 @@ Route::post('/contacts/delete/', [ContactsController::class, 'deleteItem'])->whe
 Route::post('/contracts_materials/delete/', [Contracts_MaterialsController::class, 'deleteItem'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('contracts_materials.delete');
 Route::post('/contracts_machinery/delete/', [Contracts_MachineryController::class, 'deleteItem'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('contracts_machinery.delete');
 
-Route::get('/users', [UsersController::class, 'getItems'])->middleware(['auth', 'verified'])->name('usuarios');
-Route::get('/users/{id}', [UsersController::class, 'getItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('users.details');
-Route::post('/users/edit/{id}', [UsersController::class, 'updateItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('users.edit');
-Route::get('/users/delete/{id}', [UsersController::class, 'deleteItem'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('users.delete');
+
 
 Route::post('/suppliers', [SuppliersController::class, 'store'])->middleware(['auth', 'verified'])->name('suppliers.store');
 
@@ -92,6 +89,15 @@ Route::post('/machinery', [MachineryController::class, 'store'])->middleware(['a
 
 Route::post('/suppliers/suppliers_materials', [Suppliers_MaterialsController::class, 'store'])->middleware(['auth', 'verified'])->name('suppliers_materials.store');
 
+
+Route::middleware(['admin'])->group(function () { 
+
+    Route::get('/users', [UsersController::class, 'getItems'])->middleware(['auth', 'verified'])->name('usuarios');
+    Route::get('/users/{id}', [UsersController::class, 'getItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('users.details');
+    Route::post('/users/edit/{id}', [UsersController::class, 'updateItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('users.edit');
+    Route::get('/users/delete/{id}', [UsersController::class, 'deleteItem'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('users.delete');
+
+});
 //
 
 Route::middleware(['auth', 'verified'])->group(function () {
