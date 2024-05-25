@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a>
+                    <a href="{{route('dashboard')}}">
                         <x-application-logo-dashboard />
                     </a>
                 </div>
@@ -53,7 +53,7 @@
                             {{ __('Editar usuario') }}
                         </x-dropdown-link>
                         @endif
-                  
+
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

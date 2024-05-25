@@ -74,11 +74,12 @@
 </script>
 @endif
 @endsection
-@if(!empty($suppliers))
+@if(!empty($suppliers) )
 @section('buttons-submenu')
 <x-button-submenu id="suppliers" text="Proveedores" />
 @endsection
 @section('selected-submenu')
+@if(!($suppliers->isEmpty()))
 <table id="table-submenu" class="table-auto w-full ">
     <thead>
         <tr class="border-b">
@@ -108,5 +109,10 @@
         @endforeach
     </tbody>
 </table>
+@else
+<div class="relative m-2">
+    <a class="text-gray-400">Este material no cuenta con ningún proveedor</a>
+</div>
+@endif
 @endsection
 @endif

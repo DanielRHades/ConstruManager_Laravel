@@ -77,10 +77,10 @@
 </script>
 @endsection
 @section('buttons-submenu')
-<x-button-submenu id="contacts" text="Contactos" route="{{route('contracts.categories',['id'=>$details->id,'category'=>'contacts'])}}" />
-<x-button-submenu id="materials" text="Materiales" route="{{route('contracts.categories',['id'=>$details->id,'category'=>'materials'])}}" />
-<x-button-submenu id="machinery" text="Maquinarias" route="{{route('contracts.categories',['id'=>$details->id,'category'=>'machinery'])}}" />
-<x-button-submenu id="records" text="Registros" route="{{route('contracts.categories',['id'=>$details->id,'category'=>'records'])}}" />
+<x-button-submenu id="contacts" text="Contactos" route="{{route('contracts.categories',['id'=>$details->id,'category'=>'contacts'])}}" active="{{!empty($category)?($category == 'contacts'):false}}" />
+<x-button-submenu id="materials" text="Materiales" route="{{route('contracts.categories',['id'=>$details->id,'category'=>'materials'])}}" active="{{!empty($category)?($category == 'materials'):false}}" />
+<x-button-submenu id="machinery" text="Maquinarias" route="{{route('contracts.categories',['id'=>$details->id,'category'=>'machinery'])}}" active="{{!empty($category)?($category == 'machinery'):false}}" />
+<x-button-submenu id="records" text="Registros" route="{{route('contracts.categories',['id'=>$details->id,'category'=>'records'])}}" active="{{!empty($category)?($category == 'records'):false}}" />
 @if(!empty($category))
 <div class="fixed bottom-12 right-8">
     <button id="openPopupButton_right" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>
@@ -94,6 +94,7 @@
     </div>
 </div>
 @section('selected-submenu')
+@if(!($data->isEmpty()))
 <table id="table-submenu" class="table-auto w-full ">
     <thead>
         <tr id="table-submenu-head" class="border-b">
@@ -126,6 +127,11 @@
         @endif
     </tbody>
 </table>
+@else
+<div class="relative m-2">
+    <a class="text-gray-400">Este contrato no cuenta con ningún contacto</a>
+</div>
+@endif
 <script>
     document.getElementById('openPopupButton_right').addEventListener('click', function() {
         document.getElementById('form_add_contact').classList.toggle('hidden')
@@ -142,6 +148,7 @@
     </div>
 </div>
 @section('selected-submenu')
+@if(!($data->isEmpty()))
 <table id="table-submenu" class="table-auto w-full ">
     <thead>
         <tr id="table-submenu-head" class="border-b">
@@ -172,6 +179,11 @@
         @endif
     </tbody>
 </table>
+@else
+<div class="relative m-2">
+    <a class="text-gray-400">Este contrato no cuenta con ningún material</a>
+</div>
+@endif
 <script>
     document.getElementById('openPopupButton_right').addEventListener('click', function() {
         document.getElementById('form_add_existing_material_contract').classList.toggle('hidden')
@@ -189,6 +201,7 @@
     </div>
 </div>
 @section('selected-submenu')
+@if(!($data->isEmpty()))
 <table id="table-submenu" class="table-auto w-full ">
     <thead>
         <tr id="table-submenu-head" class="border-b">
@@ -221,6 +234,11 @@
         @endif
     </tbody>
 </table>
+@else
+<div class="relative m-2">
+    <a class="text-gray-400">Este contrato no cuenta con ningúna maquinaria</a>
+</div>
+@endif
 <script>
     document.getElementById('openPopupButton_right').addEventListener('click', function() {
         document.getElementById('form_add_existing_machinery').classList.toggle('hidden')
@@ -248,6 +266,7 @@
     </div>
 </div>
 @section('selected-submenu')
+@if(!($data->isEmpty()))
 <table id="table-submenu" class="table-auto w-full ">
     <thead>
         <tr id="table-submenu-head" class="border-b">
@@ -304,6 +323,11 @@
         @endif
     </tbody>
 </table>
+@else
+<div class="relative m-2">
+    <a class="text-gray-400">Este contrato no cuenta con ningún registro</a>
+</div>
+@endif
 
 <script>
     document.getElementById('openPopupButton_right').addEventListener('click', function() {

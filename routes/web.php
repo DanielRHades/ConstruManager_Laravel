@@ -14,6 +14,7 @@ use App\Http\Controllers\Contracts_MaterialsController;
 use App\Http\Controllers\Contracts_MachineryController;
 use App\Http\Controllers\RecordsController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 
 /*
@@ -36,6 +37,7 @@ Route::get('/', function () {
 
 
 //
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/records/{id}', [RecordsController::class, 'getItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('records.details');
 Route::post('/records/edit/', [RecordsController::class, 'updateItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('records.edit');
@@ -90,13 +92,12 @@ Route::post('/machinery', [MachineryController::class, 'store'])->middleware(['a
 Route::post('/suppliers/suppliers_materials', [Suppliers_MaterialsController::class, 'store'])->middleware(['auth', 'verified'])->name('suppliers_materials.store');
 
 
-Route::middleware(['admin'])->group(function () { 
+Route::middleware(['admin'])->group(function () {
 
     Route::get('/users', [UsersController::class, 'getItems'])->middleware(['auth', 'verified'])->name('usuarios');
     Route::get('/users/{id}', [UsersController::class, 'getItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('users.details');
     Route::post('/users/edit/{id}', [UsersController::class, 'updateItemDetails'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('users.edit');
     Route::get('/users/delete/{id}', [UsersController::class, 'deleteItem'])->where(['id' => '[0-9]+'])->middleware(['auth', 'verified'])->name('users.delete');
-
 });
 //
 
