@@ -13,4 +13,10 @@ class Supplier extends Model
     protected $fillable = ['name', 'email', 'phone'];
 
     public $timestamps = false;
+
+    
+    public function materials()
+    {
+        return $this->belongsToMany(Material::class, 'supplier_material');
+    }
 }

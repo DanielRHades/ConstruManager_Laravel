@@ -14,4 +14,9 @@ class Machinery extends Model
     protected $fillable = ['name', 'quantity', 'day_price'];
 
     public $timestamps = false;
+
+    public function contracts()
+    {
+        return $this->belongsToMany(Contract::class, 'contract_machinery')->withPivot('quantity', 'days');
+    }
 }
