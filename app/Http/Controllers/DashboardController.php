@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Models\Contract;
 use App\Models\Material;
+use App\Models\Machinery;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -27,11 +28,23 @@ class DashboardController extends Controller
             ->groupBy('cm.material_id', 'material.name')
             ->orderBy('amount','asc')
             ->first();
+        $fMachinery = Machinery::join('contract_machinery as cm', 'cm.machinery_id', '=', 'machinery.id')
+            ->select('machinery.name', DB::raw('SUM(cm.quantity) as amount'))
+            ->groupBy('cm.machinery_id', 'machinery.name')
+            ->orderBy('amount','desc')
+            ->first();
+        $lMachinery = Machinery::join('contract_machinery as cm', 'cm.machinery_id', '=', 'machinery.id')
+            ->select('machinery.name', DB::raw('SUM(cm.quantity) as amount'))
+            ->groupBy('cm.machinery_id', 'machinery.name')
+            ->orderBy('amount','asc')
+            ->first();
         return view('dashboard')
             ->with('lMaterials', $lMaterials)
             ->with('tContracts',$tContracts)
             ->with('fMaterial',$fMaterial)
-            ->with('lMaterial',$lMaterial);
+            ->with('lMaterial',$lMaterial)
+            ->with('fMachinery',$fMachinery)
+            ->with('lMachinery',$lMachinery);
     }
     //
 }

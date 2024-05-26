@@ -108,18 +108,18 @@
     <tbody id="table-sub-submenu">
         @if(!empty($data))
         @foreach($data as $entry)
-        <tr>
+        <tr >
             <td class="border-b">{{$entry->name}}</td>
             <td class="border-b">{{$entry->role}}</td>
             <td class="border-b">{{$entry->email}}</td>
             <td class="border-b">{{$entry->phone}}</td>
             <td>
-                <form method="post" action="{{route('contacts.delete')}}">
+                <form class="flex justify-center align-middle mb-0" method="post" action="{{route('contacts.delete')}}">
                     @csrf
                     <input type="hidden" name="current_route" value="{{ Route::currentRouteName() }}">
                     <input type="hidden" name="current_id" value="{{$details->id}}">
                     <input type="hidden" name="contact_id" value="{{$entry->id}}">
-                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-2 left-0 right-0 ">
+                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-3">
                 </form>
             </td>
         </tr>
@@ -166,12 +166,12 @@
             <td class="border-b">{{$entry->quantity}}</td>
             <td class="border-b">{{$entry->unit_price}}</td>
             <td>
-                <form method="post" action="{{route('contracts_materials.delete')}}">
+                <form class="flex justify-center align-middle mb-0" method="post" action="{{route('contracts_materials.delete')}}">
                     @csrf
                     <input type="hidden" name="current_route" value="{{ Route::currentRouteName() }}">
                     <input type="hidden" name="contract_id" value="{{$details->id}}">
                     <input type="hidden" name="material_id" value="{{$entry->id}}">
-                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-2 left-0 right-0 ">
+                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-3">
                 </form>
             </td>
         </tr>
@@ -221,12 +221,12 @@
             <td class="border-b">{{$entry->days}}</td>
             <td class="border-b">{{$entry->day_price}}</td>
             <td>
-                <form method="post" action="{{route('contracts_machinery.delete')}}">
+                <form class="flex justify-center align-middle mb-0" method="post" action="{{route('contracts_machinery.delete')}}">
                     @csrf
                     <input type="hidden" name="current_route" value="{{ Route::currentRouteName() }}">
                     <input type="hidden" name="contract_id" value="{{$details->id}}">
                     <input type="hidden" name="machinery_id" value="{{$entry->id}}">
-                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-2 left-0 right-0 ">
+                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-3 ">
                 </form>
             </td>
         </tr>
@@ -284,12 +284,12 @@
             <td class="border-b">{{$entry->id}}</td>
             <td class="border-b">{{$entry->date}}</td>
             <td>
-                <form method="post" action="{{route('records.delete')}}">
+                <form class="flex justify-center align-middle mb-0" method="post" action="{{route('records.delete')}}">
                     @csrf
                     <input type="hidden" name="current_route" value="{{ Route::currentRouteName() }}">
                     <input type="hidden" name="current_id" value="{{$details->id}}">
                     <input type="hidden" name="record_id" value="{{$entry->id}}">
-                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-2 left-0 right-0 ">
+                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-3">
                 </form>
             </td>
             <td><img id="record-button-{{$entry->id}}" src="{{asset('img/editar.png')}}" class="cursor-pointer h-2" /></td>

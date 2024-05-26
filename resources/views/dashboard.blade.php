@@ -20,24 +20,40 @@
 <body class="font-sans text-gray-900 antialiased flex-1 relative bg-gray-100">
     @include('layouts.navigation')
     <div class="m-6">
-        <h1 class="font-bold text-2xl">Bienvenido a Construmanager, {{Auth::user()->name}}</h1>
+        <h1 class="font-bold text-3xl">Bienvenido a Construmanager, {{Auth::user()->name}}</h1>
     </div>
-    <div class="flex">
-    <div class="m-6 bg-white rounded p-4">
-        <p>El material más solicitado es:</p>
-        <p class="font-bold text-4xl">{{$fMaterial->name}}</p>
+    <div class="grid grid-cols-4 gap-6 *:bg-white *:rounded *:p-4 *:mb-6  mx-6 empty:hidden">
+        @if ($fMaterial != null)
+        <div >
+            <p>El material más solicitado es:</p>
+            <p class="font-bold text-4xl">{{$fMaterial->name}}</p>
+        </div>
+        @endif
+        @if ($lMaterial != null && $lMaterial!=$fMaterial)
+        <div >
+            <p>El material menos solicitado es:</p>
+            <p class="font-bold text-4xl">{{$lMaterial->name}}</p>
+        </div>
+        @endif
+        @if ($fMachinery != null)
+        <div >
+            <p>La maquinaria más solicitada es:</p>
+            <p class="font-bold text-4xl">{{$fMachinery->name}}</p>
+        </div>
+        @endif
+        @if ($lMachinery != null && $lMachinery != $fMachinery)
+        <div >
+            <p>La maquinaria menos solicitada es:</p>
+            <p class="font-bold text-4xl">{{$lMachinery->name}}</p>
+        </div>
+        @endif
     </div>
-    <div class="m-6 bg-white rounded p-4">
-        <p>El material menos solicitado es:</p>
-        <p class="font-bold text-4xl">{{$lMaterial->name}}</p>
-    </div>
-</div>
-    <div class="bg-white m-6 mt-0 p-3">
-        <div class="grid grid-cols-2 gap-3">
-            <div class="h-64">
+    <div class="bg-white m-6 mt-0 rounded">
+        <div class="grid grid-cols-2 gap-6 p-6 w-full">
+            <div>
                 <canvas id="low-materials-graph" ></canvas>
             </div>
-            <div class="h-64">
+            <div>
                 <canvas id="time-contracts-graph" ></canvas>
             </div>
         </div>
@@ -51,14 +67,24 @@
             data: {
                 labels: @json($lMaterials->pluck('name')),
                 datasets: [{
-                    label: "Materiales con menos existencias",
+                    label: "Cantidad",
                     data: @json($lMaterials->pluck('quantity')),
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(228, 164, 45, 0.2)',
+                    borderColor: 'rgba(228, 164, 45, 1)',
                     borderWidth: 1
                 }]
             },
             options: {
+                plugins:{
+                    title:{
+                        align: 'center',
+                        display: true,
+                        text: 'Materiales con menos existencias'
+                    },
+                    legend:{
+                        display: false
+                    }
+                },
                 scales: {
                     y: {
                         beginAtZero: true,
@@ -66,6 +92,12 @@
                             display: true,
                             text: 'Cantidad'
                         },
+                    },
+                    x:{
+                        title:{
+                            display:true,
+                            text: 'Nombre'
+                        }
                     }
                 }
             }
@@ -77,16 +109,26 @@
             data: {
                 labels: @json($tContracts->pluck('date')),
                 datasets: [{
-                    label: "Cantidad de contratos en el tiempo",
+                    label: "Cantidad",
                     data: @json($tContracts->pluck('amount')),
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(228, 164, 45, 0.2)',
+                    borderColor: 'rgba(228, 164, 45, 1)',
                     borderWidth: 1,
                     fill: true,
                     tension: 0
                 }]
             },
             options: {
+                plugins:{
+                    title:{
+                        align: 'center',
+                        display: true,
+                        text: 'Cantidad de contratos en el tiempo'
+                    },
+                    legend:{
+                        display: false
+                    }
+                },
                 scales: {
                     y: {
                         beginAtZero: true,
@@ -96,6 +138,12 @@
                         },
                         ticks: {
                         stepSize: 1
+                        }
+                    },
+                    x:{
+                        title:{
+                            display:true,
+                            text: 'Fecha de creación'
                         }
                     }
                 }

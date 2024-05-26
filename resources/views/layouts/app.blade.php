@@ -66,7 +66,7 @@
                 <div id="buttons-submenu" class="empty:hidden border-b flex">
                     @yield('buttons-submenu')
                 </div>
-                <div id="selected-submenu" class="mt-2 border-b border-x">
+                <div id="selected-submenu" class="pt-1 border-b border-x">
                     @yield('selected-submenu')
                 </div>
             </div>
