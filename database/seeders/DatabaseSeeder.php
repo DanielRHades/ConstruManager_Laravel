@@ -9,6 +9,7 @@ use App\Models\Supplier;
 use App\Models\Machinery;
 use App\Models\Record;
 use App\Models\Contact;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,22 +21,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-       
-        Material::factory()->count(15)->create();
+        User::factory()->count(20)->create();
+        Material::factory()->count(20)->create();
         Contract::factory()->count(20)->create();
-        Supplier::factory()->count(7)->create();
-        Machinery::factory()->count(7)->create();
+        Supplier::factory()->count(20)->create();
+        Machinery::factory()->count(20)->create();
         
         $contracts = Contract::all();
 
         $contracts->each(function ($contract) {
-            Record::factory()->count(rand(1, 5))->create([
+            Record::factory()->count(rand(1, 20))->create([
                 'contract_id' => $contract->id,
             ]);
         });
 
         $contracts->each(function ($contract) {
-            Contact::factory()->count(rand(1, 5))->create([
+            Contact::factory()->count(rand(1, 20))->create([
                 'contract_id' => $contract->id,
             ]);
         });
@@ -43,7 +44,7 @@ class DatabaseSeeder extends Seeder
         $machineries = Machinery::all();
 
         $contracts->each(function ($contract) use ($machineries) {
-            $selectedMachineries = $machineries->random(rand(1, 5));
+            $selectedMachineries = $machineries->random(rand(1, 20));
             $selectedMachineries->each(function ($machinery) use ($contract) {
                 
                 if (!$contract->machineries()->where('machinery_id', $machinery->id)->exists()) {
@@ -58,7 +59,7 @@ class DatabaseSeeder extends Seeder
         $materials = Material::all();
 
         $contracts->each(function ($contract) use ($materials) {
-            $selectedMaterials = $materials->random(rand(1, 5));
+            $selectedMaterials = $materials->random(rand(1, 20));
             $selectedMaterials->each(function ($material) use ($contract) {
                 
                 if (!$contract->materials()->where('material_id', $material->id)->exists()) {
@@ -72,7 +73,7 @@ class DatabaseSeeder extends Seeder
         $suppliers = Supplier::all();
 
         $suppliers->each(function ($supplier) use ($materials) {
-            $selectedMaterials = $materials->random(rand(1, 5));
+            $selectedMaterials = $materials->random(rand(1, 20));
             $selectedMaterials->each(function ($material) use ($supplier) {
               
                 if (!$supplier->materials()->where('material_id', $material->id)->exists()) {
