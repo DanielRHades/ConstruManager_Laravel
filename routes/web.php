@@ -13,7 +13,6 @@ use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\Contracts_MaterialsController;
 use App\Http\Controllers\Contracts_MachineryController;
 use App\Http\Controllers\RecordsController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -32,7 +31,10 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 //Poner auth.login una vez se cambie en las rutas de auth.php el register dentro del "admin" Middleware
 //Tambien tener minimo un usuario Administrador creado dentro de la base de datos.
 
-Route::get('/', [AuthenticatedSessionController::class,'create'])->name('login');
+Route::get('/', function () {
+    return view('auth.login');
+});
+
 //
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
