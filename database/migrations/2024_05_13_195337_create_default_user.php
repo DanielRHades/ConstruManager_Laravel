@@ -16,10 +16,10 @@ class CreateDefaultUser extends Migration
     public function up()
     {
         User::create([
-            'name' => 'Administrador Principal',
+            'name' => 'Libardo Hernandez',
             'type' => 'administrador',
             'email' => 'administradorcm@gmail.com',
-            'password' => bcrypt('construmanagergod123'),
+            'password' => '$2y$10$bNw.WasPUeJ1.aLKVvDq.uJ7mSeCUO3D3beJ0TXp48ug9g6Jrt5mG',
         ]);
     }
 

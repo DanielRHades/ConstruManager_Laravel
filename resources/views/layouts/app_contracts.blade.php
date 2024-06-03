@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app_contracts.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -59,17 +59,21 @@
             @yield('side-menu-items')
         </div>
         <main class="absolute w-3/4 right-0 p-5 border h-full flex flex-col">
-            <div id="selected-main" class="overflow-y-auto w-full mb-5" style="height: 25%;">
+            <div id="selected-main" class="overflow-y-auto w-full mb-5" style="height: 24%;">
                 @yield('selected-main')
+            </div>
+            <div id="selected-submain" class="overflow-y-auto w-full mb-5" style="height: 15%;">
+                @yield('selected-submain')
             </div>
             <div id="buttons-submenu" class="empty:hidden border-b flex overflow-y-auto w-full" style="height: 5%;">
                 @yield('buttons-submenu')
             </div>
-            <div id="selected-submenu" class="pt-1 border-b border-x overflow-y-auto w-11/12 float-right" style="height: 70%"> 
+            <div id="selected-submenu" class="pt-1 border-b border-x overflow-y-auto w-11/12 float-right" style="height: 56%"> 
                 @yield('selected-submenu')
             </div>        
         </main>
     </div>
+    
     <div class="container">
         @yield('content')
     </div>

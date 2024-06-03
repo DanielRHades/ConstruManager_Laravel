@@ -14,7 +14,7 @@ class ContractsController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'descripcion' => 'required|string|max:255',
+            'descripcion' => 'required|string',
             'fecha' => 'required|string|max:255',
         ]);
 
@@ -65,7 +65,7 @@ class ContractsController extends Controller
     public function getItemDetails($itemId)
     {
         $details =
-            Contract::select('contract.id', 'contract.date', 'contract.description', 'customer.name', 'customer.email', 'customer.type', 'customer.phone')
+            Contract::select('contract.id', 'contract.date', 'contract.description', 'customer.name', 'customer.email', 'customer.type', 'customer.phone', 'customer.address')
             ->leftJoin('customer', 'customer.contract_id', '=', 'contract.id')
             ->where('contract.id', $itemId)
             ->first();
@@ -76,7 +76,7 @@ class ContractsController extends Controller
     public function updateItemDetails($itemId, Request $request)
     {
         $validatedData = $request->validate([
-            'descripcion' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:1000',
             'fecha' => 'required|string|max:255',
         ]);
 

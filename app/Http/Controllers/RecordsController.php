@@ -11,7 +11,7 @@ class RecordsController extends Controller
     {
         $validatedData = $request->validate([
             'fecha' => 'required|string|max:255',
-            'descripcion' => 'required|string|max:255',
+            'descripcion' => 'required|string',
             'contract_id_record' => 'required|exists:contract,id',
 
         ]);
@@ -38,7 +38,7 @@ class RecordsController extends Controller
     {
         $validatedData = $request->validate([
             'fecha' => 'required|string|max:255',
-            'descripcion' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:1000',
 
         ]);
 

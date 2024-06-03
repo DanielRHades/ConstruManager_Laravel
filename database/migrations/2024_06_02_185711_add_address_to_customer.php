@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('record', function (Blueprint $table) {
-            $table->id();
-            $table->date('date');
-            $table->string('description', 1000);
-            $table->unsignedBigInteger('contract_id');
-
-            $table->foreign('contract_id')->references('id')->on('contract')->onDelete('cascade');
+        Schema::table('customer', function (Blueprint $table) {
+            $table->string('address')->after('phone');
         });
     }
 
@@ -30,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('record');
+        Schema::table('customer', function (Blueprint $table) {
+            $table->dropColumn('address');
+        });
     }
 };

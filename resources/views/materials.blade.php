@@ -1,8 +1,42 @@
 @extends('layouts.app')
 @section('side-menu-items')
-@foreach ($materials as $material)
-<x-side-menu-item primary="{{$material->name}}" id="{{$material->id}}" section="materials" />
-@endforeach
+<div class="mb-4">
+    <input type="text" id="search" placeholder="Buscar por nombre" onkeyup="filterMaterials()" class="w-full p-3 border border-gray-300 rounded-lg">
+</div>
+
+<div id="materials-list">
+    @foreach ($materials as $material)
+        <div class="material-item mb-2">
+            <a href="{{ route('materials.details', ['id' => $material->id]) }}" class="group block">
+                <div id="{{ $material->id }}" class="side-menu-item cursor-pointer border-black border-x border-b border-opacity-100 border-solid w-full p-3 justify-start group-first:border-t hover:bg-gray-300 rounded-md">
+                    <p id="{{ $material->id }}-main-text" class="text-xl w-fit">
+                        {{ $material->name }}
+                    </p>
+                    <p class="text-base text-gray-400 w-fit">{{ $material->description }}</p>
+                </div>
+            </a>
+        </div>
+    @endforeach
+</div>
+
+<script>
+    function filterMaterials() {
+        const searchInput = document.getElementById('search').value.toLowerCase();
+        const materialItems = document.getElementsByClassName('material-item');
+        
+        for (let i = 0; i < materialItems.length; i++) {
+            const primaryText = materialItems[i].querySelector('p[id$="-main-text"]').innerText.toLowerCase();
+            const secondaryText = materialItems[i].querySelector('p.text-base').innerText.toLowerCase();
+
+            if (primaryText.includes(searchInput) || secondaryText.includes(searchInput)) {
+                materialItems[i].style.display = '';
+            } else {
+                materialItems[i].style.display = 'none';
+            }
+        }
+    }
+</script>
+
 
 <div class="fixed bottom-12">
     <button id="openPopupButton_left" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>
@@ -25,6 +59,7 @@
 @endsection
 @section('selected-main')
 @if(!empty($details))
+<div class="relative p-6 bg-white border border-gray-300 rounded-lg shadow-lg" style="margin-right: 16px;">
 <div class="relative">
     <div class="absolute right-0 top-0 flex">
         <img id="edit-item" src="{{asset('img/editar.png')}}" class="h-6 me-4 cursor-pointer">
@@ -46,7 +81,8 @@
         <x-form-edit-material id="{{$details->id}}" />
     </div>
 </div>
-<div class="fixed bottom-12 right-8">
+</div>
+<div class="fixed bottom-12 right-12">
     <button id="openPopupButton_right" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>
 </div>
 
@@ -102,7 +138,7 @@
                     <input type="hidden" name="current_id" value="{{$details->id}}">
                     <input type="hidden" name="material_id" value="{{$details->id}}">
                     <input type="hidden" name="supplier_id" value="{{$supplier->id}}">
-                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-3">
+                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-3 mr-3">
                 </form>
             </td>
         </tr>

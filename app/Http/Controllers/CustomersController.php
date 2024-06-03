@@ -14,6 +14,7 @@ class CustomersController extends Controller
             'tipo_cliente' => 'required|in:natural,juridico',
             'email' => 'required|email|max:255',
             'telefono' => 'nullable|string|max:20',
+            'direccion' => 'required|string|max:255',
             'contract_id_customer' => 'required|exists:contract,id',
         ]);
 
@@ -22,6 +23,7 @@ class CustomersController extends Controller
         $customer->type = $validatedData['tipo_cliente'];
         $customer->email = $validatedData['email'];
         $customer->phone = $validatedData['telefono'];
+        $customer->address = $validatedData['direccion'];
         $customer->contract_id = $validatedData['contract_id_customer'];
 
         $customer->save();

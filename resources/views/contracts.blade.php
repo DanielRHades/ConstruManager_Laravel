@@ -1,14 +1,44 @@
-@extends('layouts.app')
-@section('side-menu-items')
-@foreach ($contracts as $contract)
-<x-side-menu-item id="{{$contract->id}}" primary="Contrato {{$contract->id}}" primary2="{{implode('/',explode('-',$contract->date))}}" secondary="{{$contract->name}}" section="contracts" />
-@endforeach
+@extends('layouts.app_contracts')
 
+@section('side-menu-items')
+    <div class="mb-4">
+        <input type="text" id="search" placeholder="Buscar por nombre, fecha o cliente" onkeyup="filterContracts()" class="w-full p-3 border border-gray-300 rounded-lg">
+    </div>
+    
+    <div id="contracts-list">
+        @foreach ($contracts as $contract)
+            <div class="contract-item mb-2">
+                <a href="{{ route('contracts.details', ['id' => $contract->id]) }}" class="group block">
+                    <div id="{{ $contract->id }}" class="side-menu-item cursor-pointer border-black border-x border-b border-opacity-100 border-solid w-full p-3 justify-start group-first:border-t hover:bg-gray-300 rounded-md">
+                        <p id="{{ $contract->id }}-main-text" class="text-xl w-fit">
+                            Contrato {{ $contract->id }} - <span id="{{ $contract->id }}-main-text-2">{{ implode('/', explode('-', $contract->date)) }}</span>
+                        </p>
+                        <p class="text-base text-gray-400 w-fit">{{ $contract->name }}</p>
+                    </div>
+                </a>
+            </div>
+        @endforeach
+    </div>
+    <script>
+        function filterContracts() {
+            const searchInput = document.getElementById('search').value.toLowerCase();
+            const contractItems = document.getElementsByClassName('contract-item');
+            
+            for (let i = 0; i < contractItems.length; i++) {
+                const primaryText = contractItems[i].querySelector('p[id$="-main-text"]').innerText.toLowerCase();
+                const secondaryText = contractItems[i].querySelector('p.text-base').innerText.toLowerCase();
+
+                if (primaryText.includes(searchInput) || secondaryText.includes(searchInput)) {
+                    contractItems[i].style.display = '';
+                } else {
+                    contractItems[i].style.display = 'none';
+                }
+            }
+        }
+    </script>
 <div class="fixed bottom-12">
     <button id="openPopupButton_left_1" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>
 </div>
-
-
 
 <div id="form_add_contract" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
     <div class="bg-white p-8 rounded-lg shadow-md w-96">
@@ -29,21 +59,18 @@
         <x-form_edit_contract id="{{$details->id}}" />
     </div>
 </div>
-
 <div id="form_add_customer" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
     <div class="bg-white p-8 rounded-lg shadow-md w-96">
         @include('components.form_add_customer')
     </div>
 </div>
-
 <div id="form_delete" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
     <div class="bg-white p-8 rounded-lg shadow-md w-96">
         <x-form-delete section="contracts" id="{{$details->id}}" />
     </div>
 </div>
-
-
 @section('selected-main')
+<div class="relative p-6 bg-white border border-gray-300 rounded-lg shadow-lg" style="margin-right: 16px;">
 <div class="relative">
     <div class="absolute right-0 top-0 flex">
         <img id="edit-item" src="{{asset('img/editar.png')}}" class="h-6 me-4 cursor-pointer">
@@ -53,10 +80,13 @@
 <h1 class="text-4xl font-bold">Contrato <a id="id">{{$details->id}}</a> - <a id="date">{{$details->date}}</a></h1>
 </br>
 <p id="description">{{$details->description}}</p>
-</br>
+</div>
 @if (!empty($details->name))
-<strong class="bottom-0"><a id="name">{{ $details->name }}</a> - <a id="e-mail">{{ $details->email }}</a> - <a id="phone">{{ $details->phone }}</a> - <a id="type">{{ $details->type }}</a></strong>
-
+@section('selected-submain')
+<div class="relative p-6 bg-white border border-gray-300 rounded-lg shadow-lg" style="margin-right: 16px;">
+<strong class="bottom-0">Nombre: <a id="name">{{ $details->name }}</a> | Tipo: <a id="type">{{ $details->type }}</a> | Email: <a id="e-mail">{{ $details->email }}</a> | Telefono: <a id="phone">{{ $details->phone }}</a> | Direccion: <a id="address">{{ $details->address }}</a></strong>
+</div>
+@endsection
 @else
 <div class="fixed bottom-12 left-20">
     <button id="openPopupButton_left_2" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>
@@ -82,7 +112,7 @@
 <x-button-submenu id="machinery" text="Maquinarias" route="{{route('contracts.categories',['id'=>$details->id,'category'=>'machinery'])}}" active="{{!empty($category)?($category == 'machinery'):false}}" />
 <x-button-submenu id="records" text="Registros" route="{{route('contracts.categories',['id'=>$details->id,'category'=>'records'])}}" active="{{!empty($category)?($category == 'records'):false}}" />
 @if(!empty($category))
-<div class="fixed bottom-12 right-8">
+<div class="fixed bottom-12 right-12">
     <button id="openPopupButton_right" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>
 </div>
 @switch($category)
@@ -102,7 +132,7 @@
             <th class="text-left">Rol</th>
             <th class="text-left">Email</th>
             <th class="text-left">Teléfono</th>
-            <th class="text-left"></th>
+            <th class="text-right"></th>
         </tr>
     </thead>
     <tbody id="table-sub-submenu">
@@ -119,7 +149,7 @@
                     <input type="hidden" name="current_route" value="{{ Route::currentRouteName() }}">
                     <input type="hidden" name="current_id" value="{{$details->id}}">
                     <input type="hidden" name="contact_id" value="{{$entry->id}}">
-                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-3">
+                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-3 mr-3">
                 </form>
             </td>
         </tr>

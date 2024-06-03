@@ -6,7 +6,7 @@
             @csrf
             <div class="mb-4">
                 <label class="block text-sm font-semibold mb-2" for="descripcion">Descripción</label>
-                <input type="text" id="description-edit" name="descripcion" class="w-full border-gray-300 rounded-md p-2">
+                <textarea id="description-edit" name="descripcion" class="w-full border-gray-300 rounded-md p-2"></textarea>
             </div>
             <div class="mb-4">
                 <label class="block text-sm font-semibold mb-2" for="fecha">Fecha</label>
