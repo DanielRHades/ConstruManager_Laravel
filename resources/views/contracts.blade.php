@@ -70,7 +70,7 @@
     </div>
 </div>
 @section('selected-main')
-<div class="relative p-6 bg-white border border-gray-300 rounded-lg shadow-lg" style="margin-right: 16px;">
+<div class="relative p-6 bg-white border border-gray-300 rounded-lg" style="margin-right: 16px;">
 <div class="relative">
     <div class="absolute right-0 top-0 flex">
         <img id="edit-item" src="{{asset('img/editar.png')}}" class="h-6 me-4 cursor-pointer">
@@ -83,7 +83,7 @@
 </div>
 @if (!empty($details->name))
 @section('selected-submain')
-<div class="relative p-6 bg-white border border-gray-300 rounded-lg shadow-lg" style="margin-right: 16px;">
+<div class="relative p-6 bg-white border border-gray-300 rounded-lg" style="margin-right: 16px;">
 <strong class="bottom-0">Nombre: <a id="name">{{ $details->name }}</a> | Tipo: <a id="type">{{ $details->type }}</a> | Email: <a id="e-mail">{{ $details->email }}</a> | Telefono: <a id="phone">{{ $details->phone }}</a> | Direccion: <a id="address">{{ $details->address }}</a></strong>
 </div>
 @endsection
