@@ -83,7 +83,7 @@
 </div>
 @if (!empty($details->name))
 @section('selected-submain')
-<div class="relative p-6 bg-white border border-gray-300 rounded-lg" style="margin-right: 16px;">
+<div class="relative p-4 bg-white border border-gray-300 rounded-lg" style="margin-right: 16px;">
 <strong class="bottom-0">Nombre: <a id="name">{{ $details->name }}</a> | Tipo: <a id="type">{{ $details->type }}</a> | Email: <a id="e-mail">{{ $details->email }}</a> | Telefono: <a id="phone">{{ $details->phone }}</a> | Direccion: <a id="address">{{ $details->address }}</a></strong>
 </div>
 @endsection
@@ -149,7 +149,7 @@
                     <input type="hidden" name="current_route" value="{{ Route::currentRouteName() }}">
                     <input type="hidden" name="current_id" value="{{$details->id}}">
                     <input type="hidden" name="contact_id" value="{{$entry->id}}">
-                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-3 mr-3">
+                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-3 mr-6">
                 </form>
             </td>
         </tr>
@@ -201,7 +201,7 @@
                     <input type="hidden" name="current_route" value="{{ Route::currentRouteName() }}">
                     <input type="hidden" name="contract_id" value="{{$details->id}}">
                     <input type="hidden" name="material_id" value="{{$entry->id}}">
-                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-3">
+                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-3 mr-4">
                 </form>
             </td>
         </tr>
@@ -256,7 +256,7 @@
                     <input type="hidden" name="current_route" value="{{ Route::currentRouteName() }}">
                     <input type="hidden" name="contract_id" value="{{$details->id}}">
                     <input type="hidden" name="machinery_id" value="{{$entry->id}}">
-                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-3 ">
+                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-3 mr-4">
                 </form>
             </td>
         </tr>

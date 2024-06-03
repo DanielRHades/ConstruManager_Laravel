@@ -138,7 +138,7 @@
                     <input type="hidden" name="current_id" value="{{$details->id}}">
                     <input type="hidden" name="material_id" value="{{$details->id}}">
                     <input type="hidden" name="supplier_id" value="{{$supplier->id}}">
-                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-3 mr-3">
+                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-3 mr-5">
                 </form>
             </td>
         </tr>

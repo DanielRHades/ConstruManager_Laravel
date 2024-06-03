@@ -62,13 +62,13 @@
             <div id="selected-main" class="overflow-y-auto w-full mb-5" style="height: 24%;">
                 @yield('selected-main')
             </div>
-            <div id="selected-submain" class="overflow-y-auto w-full mb-5" style="height: 15%;">
+            <div id="selected-submain" class="overflow-y-auto w-full mb-5" style="height: 14%;">
                 @yield('selected-submain')
             </div>
-            <div id="buttons-submenu" class="empty:hidden border-b flex overflow-y-auto w-full" style="height: 5%;">
+            <div id="buttons-submenu" class="empty:hidden border-b flex overflow-y-auto w-full" style="height: 4.5%;">
                 @yield('buttons-submenu')
             </div>
-            <div id="selected-submenu" class="pt-1 border-b border-x overflow-y-auto w-11/12 float-right" style="height: 56%"> 
+            <div id="selected-submenu" class="pt-1 border-b border-x overflow-y-auto w-11/12 float-right" style="height: 57.5%"> 
                 @yield('selected-submenu')
             </div>        
         </main>
