@@ -49,7 +49,7 @@
 @endsection
 @section('selected-main')
 @if(!empty($details))
-<div class="relative p-6 bg-white border border-gray-300 rounded-lg shadow-lg" style="margin-right: 16px;">
+<div class="relative p-6 bg-white border border-gray-300 rounded-lg" style="margin-right: 16px;">
 <div class="relative">
     <div class="absolute right-0 top-0 flex">
         <img id="edit-item" src="{{asset('img/editar.png')}}" class="h-6 me-4 cursor-pointer">
