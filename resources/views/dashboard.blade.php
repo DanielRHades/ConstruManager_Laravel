@@ -22,7 +22,7 @@
     <div class="m-6">
         <h1 class="font-bold text-3xl">Bienvenido a Construmanager, {{Auth::user()->name}}</h1>
     </div>
-    <div class="grid grid-cols-4 gap-6 *:bg-white *:rounded *:p-4 *:mb-6  mx-6 empty:hidden">
+    <div class="grid grid-cols-4 gap-6 *:bg-white *:rounded *:p-4 *:mb-6 *:border *:border-gray-300 *:rounded-lg mx-6 empty:hidden">
         @if ($fMaterial != null)
         <div >
             <p>El material más solicitado es:</p>

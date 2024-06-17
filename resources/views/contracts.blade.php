@@ -4,7 +4,7 @@
     <div class="mb-4">
         <input type="text" id="search" placeholder="Buscar por nombre, fecha o cliente" onkeyup="filterContracts()" class="w-full p-3 border border-gray-300 rounded-lg">
     </div>
-    
+
     <div id="contracts-list">
         @foreach ($contracts as $contract)
             <div class="contract-item mb-2">
@@ -13,7 +13,7 @@
                         <p id="{{ $contract->id }}-main-text" class="text-xl w-fit">
                             Contrato {{ $contract->id }} - <span id="{{ $contract->id }}-main-text-2">{{ implode('/', explode('-', $contract->date)) }}</span>
                         </p>
-                        <p class="text-base text-gray-400 w-fit">{{ $contract->name }}</p>
+                        <p class="text-base text-gray-400 w-full truncate">{{ $contract->name }}</p>
                     </div>
                 </a>
             </div>
@@ -51,8 +51,8 @@
         document.getElementById('form_add_contract').classList.toggle('hidden');
     });
 </script>
-
 @endsection
+
 @if(!empty($details))
 <div id="form_edit_contract" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
     <div class="bg-white p-8 rounded-lg shadow-md w-96">
@@ -70,38 +70,46 @@
     </div>
 </div>
 @section('selected-main')
-<div class="relative p-6 bg-white border border-gray-300 rounded-lg" style="margin-right: 16px;">
-<div class="relative">
-    <div class="absolute right-0 top-0 flex">
-        <img id="edit-item" src="{{asset('img/editar.png')}}" class="h-6 me-4 cursor-pointer">
-        <img id="delete-item" src="{{asset('img/borrar.png')}}" class="h-6 cursor-pointer">
+<div class="relative p-5 bg-white border border-gray-300 rounded-lg" style="margin-right: 16px;">
+    <div class="relative">
+        <div class="absolute right-0 top-0 flex">
+            <img id="edit-item" src="{{ asset('img/editar.png') }}" class="h-6 me-4 cursor-pointer">
+            <img id="delete-item" src="{{ asset('img/borrar.png') }}" class="h-6 cursor-pointer">
+        </div>
     </div>
-</div>
-<h1 class="text-4xl font-bold">Contrato <a id="id">{{$details->id}}</a> - <a id="date">{{$details->date}}</a></h1>
-</br>
-<p id="description">{{$details->description}}</p>
+    <h1 class="text-4xl font-bold break-words w-full">Contrato <a id="id">{{ $details->id }}</a> - <a id="date">{{ $details->date }}</a></h1>
+    <br>
+    <p id="description" class="break-words w-full">{{ $details->description }}</p>
 </div>
 @if (!empty($details->name))
-@section('selected-submain')
-<div class="relative p-4 bg-white border border-gray-300 rounded-lg" style="margin-right: 16px;">
-<strong class="bottom-0">Nombre: <a id="name">{{ $details->name }}</a> | Tipo: <a id="type">{{ $details->type }}</a> | Email: <a id="e-mail">{{ $details->email }}</a> | Telefono: <a id="phone">{{ $details->phone }}</a> | Direccion: <a id="address">{{ $details->address }}</a></strong>
-</div>
-@endsection
+    @section('selected-submain')
+    <div class="relative p-3 bg-white border border-gray-300 rounded-lg" style="margin-right: 16px;">
+        <strong class="bottom-0 break-words w-full">
+            Nombre: <a id="name">{{ $details->name }}</a> | 
+            Tipo: <a id="type">{{ $details->type }}</a> | 
+            Email: <a id="e-mail">{{ $details->email }}</a> | 
+            Teléfono: <a id="phone">{{ $details->phone }}</a> | 
+            Dirección: <a id="address">{{ $details->address }}</a>
+        </strong>
+    </div>
+    @endsection
 @else
-<div class="fixed bottom-12 left-20">
-    <button id="openPopupButton_left_2" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>
-</div>
-<script>
-    document.getElementById('openPopupButton_left_2').addEventListener('click', function() {
-        document.getElementById('form_add_customer').classList.toggle('hidden');
-        document.getElementById('contract_id_customer').value = "{{$details->id}}"
-    });
-</script>
+    @section('selected-submain')
+    <div class="fixed ml-2">
+        <button id="openPopupButton_left_2" class="bg-customYellow hover:bg-yellow-400 text-white font-bold py-4 px-4 rounded-lg shadow-lg">+</button>
+    </div>
+    <script>
+        document.getElementById('openPopupButton_left_2').addEventListener('click', function() {
+            document.getElementById('form_add_customer').classList.toggle('hidden');
+            document.getElementById('contract_id_customer').value = "{{ $details->id }}";
+        });
+    </script>
+    @endsection
 @endif
 <script>
     document.getElementById('edit-item').addEventListener('click', function() {
-        document.getElementById('description-edit').value = document.getElementById('description').innerText
-        document.getElementById('date-edit').value = document.getElementById('date').innerText.split('/').join('-')
+        document.getElementById('description-edit').value = document.getElementById('description').innerText;
+        document.getElementById('date-edit').value = document.getElementById('date').innerText.split('/').join('-');
         document.getElementById('form_edit_contract').classList.toggle('hidden');
     });
 </script>
@@ -149,7 +157,7 @@
                     <input type="hidden" name="current_route" value="{{ Route::currentRouteName() }}">
                     <input type="hidden" name="current_id" value="{{$details->id}}">
                     <input type="hidden" name="contact_id" value="{{$entry->id}}">
-                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-3 mr-6">
+                    <input type="image" src="{{asset('img/borrar-x.png')}}" class="cursor-pointer h-3 mr-8">
                 </form>
             </td>
         </tr>
@@ -366,7 +374,6 @@
         document.getElementById('contract_category').value = "{{$category}}"
     })
 </script>
-
 
 @endsection
 @endswitch
